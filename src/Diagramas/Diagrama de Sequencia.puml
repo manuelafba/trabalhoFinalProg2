@@ -3,11 +3,24 @@ actor Usuario
 participant GUI
 participant SpotifyAPI
 participant Musica
+participant Playlist
 
 Usuario -> GUI : Seleciona uma música para tocar
+GUI -> Playlist : Verifica se a música está em uma playlist
+alt Música está na playlist
+    Playlist -> Musica : Retorna referência da música
+else Música não está na playlist
+    GUI -> SpotifyAPI : Solicita busca da música
+    SpotifyAPI -> Musica : Recupera dados da música
+    Musica -> SpotifyAPI : Retorna informações da música
+end
+
 GUI -> SpotifyAPI : Solicita reprodução da música
-SpotifyAPI -> Musica : Recupera dados da música
-Musica -> SpotifyAPI : Retorna informações da música
 SpotifyAPI -> GUI : Confirma início da reprodução
 GUI -> Usuario : Atualiza a interface (Exibe controles de reprodução)
+
+alt Usuário pausa ou troca de música
+    Usuario -> GUI : Interrompe ou troca a música
+    GUI -> SpotifyAPI : Envia comando para pausar ou mudar a música
+end
 @enduml
