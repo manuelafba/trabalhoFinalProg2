@@ -14,6 +14,14 @@
             this.listaMusicas = new ArrayList<>();
         }
 
+        public String getNome() {
+            return nome;
+        }
+
+        public List<Musica> getListaMusicas() {
+            return listaMusicas;
+        }
+
         public void adicionaMusica(Musica musica) {
             if (listaMusicas.size() >= MAX_MUSICAS) {
                 throw new IllegalStateException("Limite máximo da playlist atingido");
