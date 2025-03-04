@@ -1,6 +1,7 @@
 @startuml
 ' Definição das classes principais
 class Musica {
+    +int id
     +String titulo
     +String artista
     +String album
@@ -34,6 +35,7 @@ class SpotifyAPI {
     +static SpotifyAPI getInstance()
     +Musica buscarMusica(String nome) throws Exception
     +void reproduzirMusica(Musica musica)
+    +void adicionarMusicaAPlaylist(Playlist playlist, Musica musica)
 }
 
 class GUI {
@@ -46,6 +48,8 @@ class Sistema {
     -static Sistema instancia
     +static Sistema getInstance()
     +void iniciar()
+    +ArrayList<Usuario> usuarios
+    +ArrayList<Musica> bibliotecaMusicas
 }
 
 interface Reprodutivel {
@@ -55,6 +59,7 @@ interface Reprodutivel {
 
 class Usuario {
     +String nome
+    +ArrayList<Playlist> playlists
     +void criarPlaylist(String nome)
     +abstract void visualizarPlaylists()
 }
@@ -74,6 +79,7 @@ enum GeneroMusical {
 }
 
 ' Relacionamentos entre as classes
+Usuario "1" *-- "0..*" Playlist
 Playlist "1" *-- "0..*" Musica
 Artista "1" *-- "0..*" Album
 Album "1" *-- "0..*" Musica
@@ -95,5 +101,6 @@ GUI ..> Usuario
 Sistema ..> SpotifyAPI
 Sistema ..> GUI
 Sistema ..> Playlist
+Sistema ..> Usuario
 
 @enduml
