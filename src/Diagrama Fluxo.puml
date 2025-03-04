@@ -1,0 +1,41 @@
+@startuml
+start
+:Usuário abre o aplicativo;
+:Exibe Tela Principal;
+:Usuário escolhe uma ação;
+
+if (Buscar Música?) then (Sim)
+    :Usuário digita o nome da música;
+    :Chama API do Spotify para buscar a música;
+    if (Música encontrada?) then (Sim)
+        :Exibir lista de músicas encontradas;
+        :Usuário seleciona uma música;
+        :Adicionar música à playlist atual;
+    else (Não)
+        :Exibir mensagem "Música não encontrada";
+    endif
+endif
+
+if (Criar Playlist?) then (Sim)
+    :Usuário insere nome da Playlist;
+    :Criar nova Playlist;
+    :Usuário adiciona músicas à Playlist;
+    :Playlist salva no sistema;
+endif
+
+if (Reproduzir Música?) then (Sim)
+    :Usuário seleciona uma música;
+    :Chamar API do Spotify para tocar música;
+    :Atualizar interface para exibir controles de reprodução;
+
+    while (Usuário não interrompe?) is (Não)
+        :Música continua tocando;
+    endwhile
+
+    if (Usuário pausa ou troca de música?) then (Sim)
+        :Atualizar reprodução;
+    endif
+endif
+
+stop
+@enduml
