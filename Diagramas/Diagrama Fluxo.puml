@@ -1,0 +1,32 @@
+@startuml
+start
+:Iniciar sistema;
+:Exibir menu principal;
+repeat
+  :Solicitar ação do usuário;
+  switch (Escolha do usuário?)
+    case (Criar Playlist)
+      :Solicitar nome da playlist;
+      :Criar nova playlist;
+      :Adicionar músicas (até limite do usuário);
+    case (Adicionar Música ao Catálogo)
+      :Solicitar título, artista e gênero;
+      :Adicionar música ao catálogo;
+    case (Listar Músicas)
+      :Exibir catálogo de músicas;
+    case (Tocar Música)
+      :Solicitar música e usuário;
+      if (Usuário pode avançar?) then (Sim)
+        :Permitir avançar tempo;
+      else (Não)
+        :Reproduzir música sem avanço;
+      endif
+    case (Criar recomendação)
+      :Gerar lista de músicas recomendadas;
+      :Exibir sugestões;
+    case (Encerrar)
+      stop
+  endswitch
+repeat while (Usuário deseja continuar?)
+stop
+@enduml
