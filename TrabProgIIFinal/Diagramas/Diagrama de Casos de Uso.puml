@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+
+actor "Usuário Free" as Free
+actor "Usuário Premium" as Premium
+actor "Administrador" as Admin
+
+rectangle "Tocador de Música" {
+    usecase "Criar Playlist (máx. 50 músicas)" as U1
+    usecase "Adicionar Música à Playlist" as U2
+    usecase "Tocar Música" as U3
+    usecase "Avançar Música" as U4
+    usecase "Receber Recomendações" as U5
+    usecase "Favoritar Música" as U6
+    usecase "Adicionar Música ao Catálogo" as U7
+    usecase "Remover Música do Catálogo" as U8
+    usecase "Listar Músicas do Catálogo" as U9
+}
+
+Free -- U1
+Free -- U2
+Free -- U3
+Free -- U5
+Free -- U6
+
+Premium -- U1
+Premium -- U2
+Premium -- U3
+Premium -- U4
+Premium -- U5
+Premium -- U6
+
+Admin -- U7
+Admin -- U8
+Admin -- U9
+@enduml

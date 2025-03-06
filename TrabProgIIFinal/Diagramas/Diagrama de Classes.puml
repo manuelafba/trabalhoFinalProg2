@@ -1,0 +1,126 @@
+@startuml
+
+' Enum para gêneros musicais
+enum GeneroMusical {
+    ROCK
+    POP
+    JAZZ
+    CLASSICO
+    RAP
+    ELETRONICA
+}
+
+' Interface para objetos que podem ser reproduzidos
+interface Reproduzivel {
+    + tocar(): void
+}
+
+' Classe principal para gerenciar a reprodução
+class MusicPlayer {
+    - static instance: MusicPlayer
+    - volume: int
+    + static getInstance(): MusicPlayer
+    + tocarMusica(musica: Musica, usuario: Usuario): void
+    + pausar(): void
+    + parar(): void
+    + avancarTempo(segundos: int, usuario: Usuario): void
+}
+
+' Classe representando uma música
+class Musica implements Reproduzivel {
+    + titulo: String
+    + artista: String
+    + duracao: int
+    + genero: GeneroMusical
+    + album: Album
+    + caminhoArquivo: String
+    + tocar(): void
+}
+
+' Classe de artista
+class Artista {
+    + nome: String
+    + albuns: ArrayList<Album>
+}
+
+' Classe de álbum
+class Album {
+    + nome: String
+    + artista: Artista
+    + musicas: ArrayList<Musica>
+}
+
+' Playlist de músicas
+class Playlist {
+    + nome: String
+    + musicas: ArrayList<Musica>
+    + adicionarMusica(musica: Musica, usuario: Usuario): void
+    + removerMusica(musica: Musica): void
+    + tocarPlaylist(): void
+}
+
+' Classe de catálogo de músicas
+class Catalogo {
+    - musicas: ArrayList<Musica>
+    + adicionarMusica(musica: Musica): void
+    + buscarPorGenero(genero: GeneroMusical): ArrayList<Musica>
+}
+
+' Classe de usuário
+abstract class Usuario {
+    + nome: String
+    + historicoMusicasOuvidas: ArrayList<Musica>
+    + listaPlaylists: ArrayList<Musica>
+    + getTipoUsuario(): String
+    + podeAvancar(): boolean
+    + limitePlaylist(): int
+}
+
+' Subclasses de usuários
+class UsuarioPremium extends Usuario {
+    + getTipoUsuario(): String
+    + podeAvancar(): boolean
+    + limitePlaylist(): int
+}
+
+class UsuarioFree extends Usuario {
+    + getTipoUsuario(): String
+    + podeAvancar(): boolean
+    + limitePlaylist(): int
+}
+
+' Classe de recomendação de músicas
+class Recomendador {
+    + static sugerirMusica(usuario: Usuario): Musica
+}
+
+' Classe de exceção para tratamento de erros
+class ExcecaoArquivoInexistente extends Exception {
+    + ExcecaoArquivoInexistente(msg: String)
+    + ExcecaoAoCriarMusica(msg: String)
+    + ExcecaoAoCriarArtista(msg: String)
+    + ExcecaoAoCriarAlbum(msg: String)
+    + ExcecaoAoCriarPlaylist(msg: String)
+    + ExcecaoCaminhoArquivoInexistente(msg: String)
+}
+
+' GUI (Opcional)
+class GUI {
+    + iniciar(): void
+}
+
+' Relacionamentos
+MusicPlayer --> "*" Musica
+Usuario --|> UsuarioPremium
+Usuario --|> UsuarioFree
+Musica --> GeneroMusical
+Musica ..|> Reproduzivel
+Usuario --> "*" Playlist
+Playlist --> "*" Musica
+Catalogo --> "*" Musica
+Recomendador --> Usuario
+GUI --> MusicPlayer
+Artista --> "*" Album
+Album --> "*" Musica
+
+@enduml
