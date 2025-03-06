@@ -5,8 +5,9 @@ import models.Playlist;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Usuario {
+public abstract class Usuario {
     private String nome;
+    protected boolean podeAvancar;
     protected List<Playlist> playlists;
 
     public Usuario(String nome) {
@@ -29,8 +30,8 @@ public class Usuario {
             System.out.println("Nenhuma playlist foi encontrada.");
         } else {
             System.out.println("Playlists de " + this.nome + ":");
-            for (Playlist playlist : playlists) {
-                System.out.println(" - " + playlist.getNome());
+            for (int i = 0; i <= playlists.size() - 1; i++) {
+                System.out.println(+i+ " - " + playlists.get(i).getNome());
             }
         }
     }

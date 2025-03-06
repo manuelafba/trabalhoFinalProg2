@@ -5,6 +5,7 @@ public class UsuarioGratuito extends Usuario {
 
     public UsuarioGratuito(String nome) {
         super(nome);
+        this.podeAvancar = false;
     }
 
     @Override
@@ -13,6 +14,15 @@ public class UsuarioGratuito extends Usuario {
             throw new IllegalStateException("Limite de playlists atingido!");
         } else {
             super.criarPlaylist(nomePlaylist);
+        }
+    }
+
+    @Override
+    public void listarPlaylists() {
+        if (playlists.size() >= LIMITE_PLAYLISTS) {
+            throw new IllegalStateException("Limite de playlists atingido!");
+        } else {
+            super.listarPlaylists();
         }
     }
 }
