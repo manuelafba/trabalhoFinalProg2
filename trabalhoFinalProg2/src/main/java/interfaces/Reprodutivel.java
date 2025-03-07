@@ -1,8 +1,8 @@
 package interfaces;
 
 public interface Reprodutivel {
-    void reproduzir();
-    void pausar();
+    void play();
+    void pause();
     void avancar();
     void voltar();
 }

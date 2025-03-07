@@ -8,17 +8,22 @@ import java.util.List;
 
 public abstract class Usuario {
     private final String nome;
-    private boolean podeAvancar;
     private List<Playlist> playlists;
+    private boolean podeAvancar;
     private List<Musica> historicoMusicasEscutadas;
 
     public Usuario(String nome) {
         this.nome = nome;
-        this.playlists = new ArrayList<>();
+        this.playlists = new ArrayList<Playlist>();
+        this.historicoMusicasEscutadas = new ArrayList<Musica>();
     }
 
     public String getNome() {
         return this.nome;
+    }
+
+    public List<Playlist> getPlaylists() {
+        return this.playlists;
     }
 
     public void setPodeAvancar(Boolean podeAvancar) {
@@ -27,10 +32,6 @@ public abstract class Usuario {
 
     public boolean getPodeAvancar() {
         return this.podeAvancar;
-    }
-
-    public List<Playlist> getPlaylists() {
-        return this.playlists;
     }
 
     public List<Musica> getHistoricoMusicasEscutadas() {
@@ -53,9 +54,13 @@ public abstract class Usuario {
         } else {
             System.out.println("Playlists de " + this.nome + ":");
             for (int i = 0; i <= playlists.size() - 1; i++) {
-                System.out.println(+i+ " - " + this.playlists.get(i).getNome());
+                System.out.println(i+ " - " + this.playlists.get(i).getNome());
             }
         }
+    }
+
+    public void adicionarMusicaHistorico(Musica musica) {
+        this.historicoMusicasEscutadas.add(musica);
     }
 
     public abstract String getTipoUsuario();

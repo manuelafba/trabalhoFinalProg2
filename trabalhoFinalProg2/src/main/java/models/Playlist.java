@@ -1,24 +1,23 @@
     package models;
 
     import java.util.ArrayList;
-    import java.util.List;
     import java.util.NoSuchElementException;
 
     public class Playlist {
         private static final int MAX_MUSICAS = 50;
         private String nome;
-        private List<Musica> musicas;
+        private ArrayList<Musica> musicas;
 
         public Playlist(String nome) {
             this.nome = nome;
-            this.musicas = new ArrayList<>();
+            this.musicas = new ArrayList<Musica>();
         }
 
         public String getNome() {
             return this.nome;
         }
 
-        public List<Musica> getMusicas() {
+        public ArrayList<Musica> getMusicas() {
             return this.musicas;
         }
 

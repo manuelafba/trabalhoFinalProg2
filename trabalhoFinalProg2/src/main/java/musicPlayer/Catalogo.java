@@ -15,8 +15,22 @@ public class Catalogo {
         this.musicas = new ArrayList<Musica>();
     }
 
+    public ArrayList<Musica> getMusicas() {
+        return this.musicas;
+    }
+
     public void adicionarMusica(Musica musica) {
         this.musicas.add(musica);
+    }
+
+    public ArrayList<Musica> buscarMusica(String nome){
+        ArrayList<Musica> musicasFiltradas = new ArrayList<Musica>();
+        for (Musica musica : this.musicas) {
+            if (Objects.equals(musica.getNome(), nome)){
+                musicasFiltradas.add(musica);
+            }
+        }
+        return musicasFiltradas;
     }
 
     public ArrayList<Musica> buscarMusica(Generos genero){
@@ -48,5 +62,7 @@ public class Catalogo {
         }
         return musicasFiltradas;
     }
+
+
 
 }
