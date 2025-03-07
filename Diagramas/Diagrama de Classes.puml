@@ -32,7 +32,22 @@ class Musica implements Reproduzivel {
     + artista: String
     + duracao: int
     + genero: GeneroMusical
+    + album: Album
+    + caminhoArquivo: String
     + tocar(): void
+}
+
+' Classe de artista
+class Artista {
+    + nome: String
+    + albuns: ArrayList<Album>
+}
+
+' Classe de álbum
+class Album {
+    + nome: String
+    + artista: Artista
+    + musicas: ArrayList<Musica>
 }
 
 ' Playlist de músicas
@@ -54,7 +69,8 @@ class Catalogo {
 ' Classe de usuário
 abstract class Usuario {
     + nome: String
-    + getPreferenciasMusicais(): ArrayList<GeneroMusical>
+    + historicoMusicasOuvidas: ArrayList<Musica>
+    + listaPlaylists: ArrayList<Musica>
     + getTipoUsuario(): String
     + podeAvancar(): boolean
     + limitePlaylist(): int
@@ -81,6 +97,11 @@ class Recomendador {
 ' Classe de exceção para tratamento de erros
 class ExcecaoArquivoInexistente extends Exception {
     + ExcecaoArquivoInexistente(msg: String)
+    + ExcecaoAoCriarMusica(msg: String)
+    + ExcecaoAoCriarArtista(msg: String)
+    + ExcecaoAoCriarAlbum(msg: String)
+    + ExcecaoAoCriarPlaylist(msg: String)
+    + ExcecaoCaminhoArquivoInexistente(msg: String)
 }
 
 ' GUI (Opcional)
@@ -99,5 +120,7 @@ Playlist --> "*" Musica
 Catalogo --> "*" Musica
 Recomendador --> Usuario
 GUI --> MusicPlayer
+Artista --> "*" Album
+Album --> "*" Musica
 
 @enduml
