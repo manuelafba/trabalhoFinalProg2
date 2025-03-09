@@ -12,7 +12,7 @@ public class Catalogo {
     private static Catalogo instance;
 
     // Lista de músicas
-    private List<Musica> musicas;
+    private ArrayList<Musica> musicas;
 
     // Construtor privado para evitar instanciação externa
     private Catalogo() {
@@ -37,8 +37,8 @@ public class Catalogo {
     }
 
     // Metodos sobrecarregados para realizar a busca de músicas por diversos critérios diferentes
-    public List<Musica> buscarMusica(Generos genero) {
-        List<Musica> musicasFiltradas = new ArrayList<>();
+    public ArrayList<Musica> buscarMusica(Generos genero) {
+        ArrayList<Musica> musicasFiltradas = new ArrayList<>();
         for (Musica musica : this.musicas) {
             if (musica.getGeneroMusical() == genero) {
                 musicasFiltradas.add(musica);
@@ -47,8 +47,8 @@ public class Catalogo {
         return musicasFiltradas;
     }
 
-    public List<Musica> buscarMusica(Artista artista) {
-        List<Musica> musicasFiltradas = new ArrayList<>();
+    public ArrayList<Musica> buscarMusica(Artista artista) {
+        ArrayList<Musica> musicasFiltradas = new ArrayList<>();
         for (Musica musica : this.musicas) {
             if (musica.getArtista().equals(artista)) {
                 musicasFiltradas.add(musica);
@@ -57,8 +57,8 @@ public class Catalogo {
         return musicasFiltradas;
     }
 
-    public List<Musica> buscarMusica(Album album) {
-        List<Musica> musicasFiltradas = new ArrayList<>();
+    public ArrayList<Musica> buscarMusica(Album album) {
+        ArrayList<Musica> musicasFiltradas = new ArrayList<>();
         for (Musica musica : this.musicas) {
             if (musica.getAlbum().equals(album)) {
                 musicasFiltradas.add(musica);
@@ -67,13 +67,20 @@ public class Catalogo {
         return musicasFiltradas;
     }
 
-    public List<Musica> buscarMusica(String nome) {
-        List<Musica> musicasFiltradas = new ArrayList<>();
+    public ArrayList<Musica> buscarMusica(String nome) {
+        ArrayList<Musica> musicasFiltradas = new ArrayList<>();
         for (Musica musica : this.musicas) {
-            if (musica.getNome().equals(nome)) {
+            if (musica.getNome().equalsIgnoreCase(nome)) { // Verifica se são iguais sem case sensitive
                 musicasFiltradas.add(musica);
             }
         }
         return musicasFiltradas;
+    }
+
+    public void exibirCatalogo() {
+        System.out.println("---- Catálogo de músicas disponíveis ----");
+        for (Musica musica : this.musicas) {
+            System.out.println(musica.toString());
+        }
     }
 }

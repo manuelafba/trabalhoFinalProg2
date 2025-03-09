@@ -29,17 +29,21 @@ public class Carregar {
             throw new IllegalArgumentException("Nenhum arquivo MP3 encontrado no diretório.");
         }
 
-        AudioFile audioFile;
-        Tag tag;
+
 
         // Mapear e criar artistas
         Map<String, Artista> artistas = new HashMap<>();
         for (File musica : musicas) {
             try {
-                audioFile = AudioFileIO.read(musica);
-                tag = audioFile.getTag();
+                String nomeArquivo = musica.getName();
+                nomeArquivo = nomeArquivo.replace(".wav", "");
+                String[] partes = nomeArquivo.split("-");
+                // Verifica se o nome do arquivo está no formato correto
+                if (partes.length != 4) {
+                    throw new IllegalArgumentException("Formato do nome do arquivo inválido. Esperado: ARTISTA-NOME-ALBUM-GENERO.wav");
+                }
 
-                String nomeArtista = tag != null ? tag.getFirst(FieldKey.ARTIST) : "Artista desconhecido";
+                String nomeArtista = partes[0];
                 if (!artistas.containsKey(nomeArtista)) {
                     artistas.put(nomeArtista, new Artista(nomeArtista));
                 }
@@ -54,18 +58,28 @@ public class Carregar {
         Map<String, Album> albuns = new HashMap<>();
         for (File musica : musicas) {
             try {
-                audioFile = AudioFileIO.read(musica);
-                tag = audioFile.getTag();
+                String nomeArquivo = musica.getName();
+                nomeArquivo = nomeArquivo.replace(".wav", "");
+                String[] partes = nomeArquivo.split("-");
+                // Verifica se o nome do arquivo está no formato correto
+                if (partes.length != 4) {
+                    throw new IllegalArgumentException("Formato do nome do arquivo inválido. Esperado: ARTISTA-NOME-ALBUM-GENERO.wav");
+                }
 
-                String nomeArtista = tag != null ? tag.getFirst(FieldKey.ARTIST) : "Artista desconhecido";
-                String nomeAlbum = tag != null ? tag.getFirst(FieldKey.ALBUM) : "Álbum desconhecido";
+                String nomeArtista = partes[0];
+                String nomeAlbum = partes[2];
 
                 if (!albuns.containsKey(nomeAlbum)) {
                     int tamanhoAlbum = 0;
                     for (File mp3 : musicas){
-                        audioFile = AudioFileIO.read(mp3);
-                        tag = audioFile.getTag();
-                        String nomeAlbumMP3 = tag != null ? tag.getFirst(FieldKey.ALBUM) : "Álbum desconhecido";
+                        String nomeArquivoMP3 = mp3.getName();
+                        nomeArquivoMP3 = nomeArquivoMP3.replace(".wav", "");
+                        String[] partesArquivoMP3 = nomeArquivoMP3.split("-");
+                        // Verifica se o nome do arquivo está no formato correto
+                        if (partesArquivoMP3.length != 4) {
+                            throw new IllegalArgumentException("Formato do nome do arquivo inválido. Esperado: ARTISTA-NOME-ALBUM-GENERO.wav");
+                        }
+                        String nomeAlbumMP3 = partesArquivoMP3[2];
                         if (nomeAlbumMP3.equals(nomeAlbum)){ tamanhoAlbum++;}
                     }
                     albuns.put(nomeAlbum, new Album(nomeAlbum, artistas.get(nomeArtista), tamanhoAlbum));
@@ -80,13 +94,19 @@ public class Carregar {
         // Criar músicas e adicionar ao Catálogo
         for (File musica : musicas) {
             try {
-                audioFile = AudioFileIO.read(musica);
-                tag = audioFile.getTag();
+                String nomeArquivo = musica.getName();
+                nomeArquivo = nomeArquivo.replace(".wav", "");
+                String[] partes = nomeArquivo.split("-");
+                // Verifica se o nome do arquivo está no formato correto
+                if (partes.length != 4) {
+                    throw new IllegalArgumentException("Formato do nome do arquivo inválido. Esperado: ARTISTA-NOME-ALBUM-GENERO.wav");
+                }
+                AudioFile audioFile = AudioFileIO.read(musica);
 
-                String nomeMusica = tag != null ? tag.getFirst(FieldKey.TITLE) : "Nome desconhecido";
-                String nomeArtista = tag != null ? tag.getFirst(FieldKey.ARTIST) : "Artista desconhecido";
-                String nomeAlbum = tag != null ? tag.getFirst(FieldKey.ALBUM) : "Álbum desconhecido";
-                Generos generoMusical = extrairGeneroMusical(tag);
+                String nomeMusica = partes[1];
+                String nomeArtista = partes[0];
+                String nomeAlbum = partes[2];
+                Generos generoMusical = extrairGeneroMusical(partes[3]);
                 String diretorioMusica = musica.getAbsolutePath();
                 int duracaoMusica = audioFile.getAudioHeader().getTrackLength();
 
@@ -100,10 +120,10 @@ public class Carregar {
         return catalogo;
     }
 
-    private static Generos extrairGeneroMusical(Tag tag){
-        if (tag == null){ return Generos.DESCONEHCIDO; }
+    private static Generos extrairGeneroMusical(String indiceGenero){
+        if (indiceGenero == null){ return Generos.DESCONEHCIDO; }
         try {
-            return Generos.values()[Integer.parseInt(tag.getFirst(FieldKey.GENRE))];
+            return Generos.values()[Integer.parseInt(indiceGenero)];
         } catch (IllegalArgumentException e){
             return Generos.DESCONEHCIDO;
         }

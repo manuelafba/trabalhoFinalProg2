@@ -41,6 +41,10 @@ public class MusicPlayer implements Reprodutivel, LineListener {
     }
 
     public void carregarPlaylist(Playlist playlist){
+        if (this.clip != null){
+            this.clip.close();
+            this.clip = null;
+        }
         this.playlist = playlist;
         this.indiceMusica = 0;
         if (!playlist.getMusicas().isEmpty()) {
@@ -136,11 +140,20 @@ public class MusicPlayer implements Reprodutivel, LineListener {
         System.out.println("Voltando para a música anterior: " + this.musicaAtual.getNome()); // Reinicia a reprodução com a nova música
     }
 
-    @Override
-    public void update(LineEvent event) {
-        if (event.getType() == LineEvent.Type.STOP && !this.clip.isRunning()){
-            // Quando a música termina, o MusicPlayer avança para próxima música da playlist
-            this.avancar();
+//    @Override
+//    public void update(LineEvent event) {
+//        if (event.getType() == LineEvent.Type.STOP && !this.clip.isRunning()){
+//            // Quando a música termina, o MusicPlayer avança para próxima música da playlist
+//            this.avancar();
+//        }
+//    }
+@Override
+public void update(LineEvent event) {
+    if (event.getType() == LineEvent.Type.STOP) {
+        // Verifica se a música terminou naturalmente, compara a posição atual com o comprimento final
+        if (this.clip.getMicrosecondPosition() == this.clip.getMicrosecondLength()) {
+            this.avancar(); // Avança para a próxima música, somente se ela acabar
         }
     }
+}
 }

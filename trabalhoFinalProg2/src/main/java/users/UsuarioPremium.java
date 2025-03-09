@@ -1,5 +1,7 @@
 package users;
 
+import models.Playlist;
+
 public class UsuarioPremium extends Usuario {
 
     public UsuarioPremium(String nome) {
@@ -9,12 +11,25 @@ public class UsuarioPremium extends Usuario {
 
     @Override
     public void criarPlaylist(String nomePlaylist) {
-        super.criarPlaylist(nomePlaylist);
+        if (nomePlaylist == null) {
+            throw new IllegalArgumentException("O nome da playlist não pode ser vazio");
+        } else {
+            Playlist playlist = new Playlist(nomePlaylist);
+            super.getPlaylists().add(playlist);
+            System.out.println("Playlist " +nomePlaylist + " criada com sucesso!");
+        };
     }
 
     @Override
     public void listarPlaylists() {
-        super.listarPlaylists();
+        if (super.getPlaylists().isEmpty()) {
+            System.out.println("Nenhuma playlist foi encontrada.");
+        } else {
+            System.out.println("---- Playlists de " + super.getNome() + " ----");
+            for (int i = 0; i <= super.getPlaylists().size() - 1; i++) {
+                System.out.println("- " + super.getPlaylists().get(i).getNome());
+            }
+        }
     }
 
     @Override
