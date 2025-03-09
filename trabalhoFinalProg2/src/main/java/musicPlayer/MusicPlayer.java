@@ -1,90 +1,137 @@
 package musicPlayer;
 
 import interfaces.Reprodutivel;
+
 import models.Musica;
-import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.Player;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import models.Playlist;
+
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
+
 
 public class MusicPlayer implements Reprodutivel {
-    private Musica musicaAtual;
-    private boolean estaTocando;
-    private Player player; // Player da biblioteca JLayer
-    private Thread playerThread; // Thread para tocar a música
+    // Instância única da classe
+    private static MusicPlayer instance;
 
-    public MusicPlayer() {
-        this.estaTocando = false;
+    private Playlist playlist;
+    private int indiceMusica;
+    private Musica musicaAtual;
+    private String caminhoMusica;
+    private Clip clip;
+
+
+    private MusicPlayer() {
+        this.indiceMusica = 0;
+    }
+
+    public static MusicPlayer getInstance() {
+        if (instance == null){
+            instance = new MusicPlayer();
+        }
+        return instance;
     }
 
     public Musica getMusicaAtual() {
-        return this.musicaAtual;
+        return musicaAtual;
     }
 
-    public boolean isEstaTocando() {
-        return this.estaTocando;
+    public Clip getClip() {
+        return clip;
     }
 
-    public void setMusicaAtual(Musica musicaAtual) {
-        this.musicaAtual = musicaAtual;
-    }
+    public void carregarPlaylist(Playlist playlist){
+        this.playlist = playlist;
+        this.indiceMusica = 0;
+        if (!playlist.getMusicas().isEmpty()) {
+            this.musicaAtual = playlist.getMusicas().get(indiceMusica);
+            this.caminhoMusica = this.musicaAtual.getDiretorio();
+        }
 
-    public void setEstaTocando(boolean estaTocando) {
-        this.estaTocando = estaTocando;
     }
 
     @Override
     public void play() {
-        if (musicaAtual != null) {
-            try {
-                // Cria um FileInputStream para o arquivo MP3
-                FileInputStream fileInputStream = new FileInputStream(musicaAtual.getDiretorio());
-
-
-                // Inicia uma nova thread para tocar a música
-                this.playerThread = new Thread(() -> {
-                    try {
-                        this.player = new Player(fileInputStream);
-                        this.estaTocando = true;
-                        System.out.println("Tocando: " + musicaAtual.getNome());
-                        player.play(); // Inicia a reprodução
-                    } catch (JavaLayerException e) {
-                        System.out.println("Erro ao reproduzir a música: " + e.getMessage());
-                    } finally {
-                        this.estaTocando = false;
-                    }
-                });
-
-                playerThread.start(); // Inicia a thread de reprodução
-
-            } catch (FileNotFoundException e) {
-                System.out.println("Arquivo de música não encontrado: " + musicaAtual.getDiretorio());
+        if (this.musicaAtual == null && this.caminhoMusica == null) {
+            System.out.println("Nenhuma música carregada");
+            return;
+        }
+        try{
+            if (clip == null) {
+                // Inicializa o Clip apenas se ele ainda não foi criado
+                File file = new File(caminhoMusica);
+                AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
+                clip = AudioSystem.getClip();
+                clip.open(audioStream);
             }
+            clip.start(); // Iniciar a reprodução
+            System.out.println("Tocando: " + this.musicaAtual.getNome());
+
+        }  catch(UnsupportedAudioFileException e){
+            System.out.println("Tipo do arquivo de áudio não suportado");
+        }
+        catch(LineUnavailableException e){
+            System.out.println("Não foi possível aceesar o recurso de áudio");
+        }
+        catch(IOException e){
+            System.out.println("Erro ao processar a música: " + this.musicaAtual.getNome());
+        }
+    }
+
+    @Override
+    public void pause() {
+        if (this.clip != null && this.clip.isRunning()){
+            this.clip.stop(); // Pausar a reprodução
+            System.out.println("Pausado: " + this.musicaAtual.getNome());
+        }
+    }
+
+    @Override
+    public void reiniciar() {
+        if (clip != null) {
+            clip.setMicrosecondPosition(0); // Reinicia a música
+            clip.start(); // Inicia a reprodução novamente
+            System.out.println("Reiniciando: " + playlist.getMusicas().get(indiceMusica).getNome());
         } else {
             System.out.println("Nenhuma música carregada.");
         }
     }
 
     @Override
-    public void pause() {
-        if (this.estaTocando && this.player != null) {
-            this.player.close(); // Para a reprodução
-            this.estaTocando = false;
-            System.out.println("Pausado: " + this.musicaAtual.getNome());
-        } else {
-            System.out.println("A música não está tocando.");
-        }
-    }
-
-    @Override
     public void avancar() {
-        // Implementar lógica para avançar para a próxima música
-        System.out.println("Avançando para a próxima música...");
+        if (this.playlist == null || this.playlist.getMusicas().isEmpty()) {
+            System.out.println("Playlist está vazia!");
+            return;
+        }
+        // Fecha o Clip atual para liberar recursos
+        if (this.clip != null){
+            this.clip.close();
+            this.clip = null;
+        }
+        // Avança para a próxima música
+        this.indiceMusica = (this.indiceMusica + 1) % this.playlist.getMusicas().size(); // Cálculo para garantir que quando chegar no fim da playlist, o índice volta para 0
+        this.musicaAtual = this.playlist.getMusicas().get(indiceMusica);
+        this.caminhoMusica = this.musicaAtual.getDiretorio();
+        this.play();
+        System.out.println("Avançando para a próxima música: " + this.musicaAtual.getNome()); // Reinicia a reprodução com a nova música
     }
 
     @Override
     public void voltar() {
-        // Implementar lógica para voltar para a música anterior
-        System.out.println("Voltando para a música anterior...");
+        if (this.playlist == null || this.playlist.getMusicas().isEmpty()) {
+            System.out.println("Playlist está vazia!");
+            return;
+        }
+        // Fecha o Clip atual para liberar recursos
+        if (this.clip != null){
+            this.clip.close();
+            this.clip = null;
+        }
+        // Volta para a música anterior
+        this.indiceMusica = (this.indiceMusica - 1 + this.playlist.getMusicas().size()) % this.playlist.getMusicas().size(); // Cálculo para garantir que quando chegar no fim da playlist, o índice volta para 0
+        this.musicaAtual = this.playlist.getMusicas().get(indiceMusica);
+        this.caminhoMusica = this.musicaAtual.getDiretorio();
+        this.play();
+        System.out.println("Voltando para a música anterior: " + this.musicaAtual.getNome()); // Reinicia a reprodução com a nova música
     }
 }

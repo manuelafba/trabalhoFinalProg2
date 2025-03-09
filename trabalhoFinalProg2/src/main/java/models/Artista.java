@@ -15,6 +15,10 @@ public class Artista {
         return this.nome;
     }
 
+    public ArrayList<Album> getAlbuns() {
+        return this.albuns;
+    }
+
     public void adicionarAlbum(Album album) {
         this.albuns.add(album);
     }

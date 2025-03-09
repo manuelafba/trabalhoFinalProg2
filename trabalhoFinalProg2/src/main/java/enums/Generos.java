@@ -11,5 +11,6 @@ public enum Generos {
     MPB,
     JAZZ,
     CLASSICA,
-    ALTERNATIVO;
+    ALTERNATIVO,
+    DESCONEHCIDO;
 }

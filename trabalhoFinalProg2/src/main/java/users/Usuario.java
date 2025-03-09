@@ -8,9 +8,9 @@ import java.util.List;
 
 public abstract class Usuario {
     private final String nome;
-    private List<Playlist> playlists;
+    private ArrayList<Playlist> playlists;
     private boolean podeAvancar;
-    private List<Musica> historicoMusicasEscutadas;
+    private ArrayList<Musica> historicoMusicasEscutadas;
 
     public Usuario(String nome) {
         this.nome = nome;
@@ -22,7 +22,7 @@ public abstract class Usuario {
         return this.nome;
     }
 
-    public List<Playlist> getPlaylists() {
+    public ArrayList<Playlist> getPlaylists() {
         return this.playlists;
     }
 
@@ -34,7 +34,7 @@ public abstract class Usuario {
         return this.podeAvancar;
     }
 
-    public List<Musica> getHistoricoMusicasEscutadas() {
+    public ArrayList<Musica> getHistoricoMusicasEscutadas() {
         return this.historicoMusicasEscutadas;
     }
 
