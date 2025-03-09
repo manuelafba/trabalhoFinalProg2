@@ -10,7 +10,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class MusicPlayer implements Reprodutivel {
+public class MusicPlayer implements Reprodutivel, LineListener {
     // Instância única da classe
     private static MusicPlayer instance;
 
@@ -63,6 +63,7 @@ public class MusicPlayer implements Reprodutivel {
                 AudioInputStream audioStream = AudioSystem.getAudioInputStream(file);
                 clip = AudioSystem.getClip();
                 clip.open(audioStream);
+                clip.addLineListener(this); // Adicionar o LineListener ao Clip para monitorar quando a música termina para passar para a próxima
             }
             clip.start(); // Iniciar a reprodução
             System.out.println("Tocando: " + this.musicaAtual.getNome());
@@ -71,7 +72,7 @@ public class MusicPlayer implements Reprodutivel {
             System.out.println("Tipo do arquivo de áudio não suportado");
         }
         catch(LineUnavailableException e){
-            System.out.println("Não foi possível aceesar o recurso de áudio");
+            System.out.println("Não foi possível acessar o recurso de áudio");
         }
         catch(IOException e){
             System.out.println("Erro ao processar a música: " + this.musicaAtual.getNome());
@@ -133,5 +134,13 @@ public class MusicPlayer implements Reprodutivel {
         this.caminhoMusica = this.musicaAtual.getDiretorio();
         this.play();
         System.out.println("Voltando para a música anterior: " + this.musicaAtual.getNome()); // Reinicia a reprodução com a nova música
+    }
+
+    @Override
+    public void update(LineEvent event) {
+        if (event.getType() == LineEvent.Type.STOP && !this.clip.isRunning()){
+            // Quando a música termina, o MusicPlayer avança para próxima música da playlist
+            this.avancar();
+        }
     }
 }
