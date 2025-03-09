@@ -14,7 +14,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Objects;
-import java.util.Scanner;
 
 class Main {
     public static void main(String[] args) {
@@ -179,6 +178,10 @@ class Main {
                                     musicPlayer.reiniciar();
                                     break;
                                 case 4:
+                                    if (usuario.getTipoUsuario().equals("Gratuito")){
+                                        System.out.println("Usuário gratuito não pode avançar músicas. Faça já o Upgrade de plano para receber essa funcionalidade!");
+                                        break;
+                                    }
                                     musicPlayer.avancar();
                                     break;
                                 case 5:

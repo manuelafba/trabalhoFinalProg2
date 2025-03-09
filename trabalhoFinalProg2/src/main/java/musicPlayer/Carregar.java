@@ -29,8 +29,6 @@ public class Carregar {
             throw new IllegalArgumentException("Nenhum arquivo MP3 encontrado no diretório.");
         }
 
-
-
         // Mapear e criar artistas
         Map<String, Artista> artistas = new HashMap<>();
         for (File musica : musicas) {

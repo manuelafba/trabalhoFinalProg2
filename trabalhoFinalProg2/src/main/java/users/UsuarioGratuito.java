@@ -7,7 +7,6 @@ public class UsuarioGratuito extends Usuario {
 
     public UsuarioGratuito(String nome) {
         super(nome);
-        super.setPodeAvancar(false);
     }
 
     @Override

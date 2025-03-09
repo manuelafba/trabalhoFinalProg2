@@ -140,13 +140,6 @@ public class MusicPlayer implements Reprodutivel, LineListener {
         System.out.println("Voltando para a música anterior: " + this.musicaAtual.getNome()); // Reinicia a reprodução com a nova música
     }
 
-//    @Override
-//    public void update(LineEvent event) {
-//        if (event.getType() == LineEvent.Type.STOP && !this.clip.isRunning()){
-//            // Quando a música termina, o MusicPlayer avança para próxima música da playlist
-//            this.avancar();
-//        }
-//    }
 @Override
 public void update(LineEvent event) {
     if (event.getType() == LineEvent.Type.STOP) {

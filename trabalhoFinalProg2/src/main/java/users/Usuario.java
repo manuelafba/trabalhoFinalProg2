@@ -9,7 +9,6 @@ import java.util.List;
 public abstract class Usuario {
     private final String nome;
     private ArrayList<Playlist> playlists;
-    private boolean podeAvancar;
     private ArrayList<Musica> historicoMusicasEscutadas;
 
     public Usuario(String nome) {
@@ -24,14 +23,6 @@ public abstract class Usuario {
 
     public ArrayList<Playlist> getPlaylists() {
         return this.playlists;
-    }
-
-    public void setPodeAvancar(Boolean podeAvancar) {
-        this.podeAvancar = podeAvancar;
-    }
-
-    public boolean getPodeAvancar() {
-        return this.podeAvancar;
     }
 
     public ArrayList<Musica> getHistoricoMusicasEscutadas() {
