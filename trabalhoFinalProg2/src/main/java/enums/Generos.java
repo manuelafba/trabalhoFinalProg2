@@ -12,5 +12,6 @@ public enum Generos {
     JAZZ,
     CLASSICA,
     ALTERNATIVO,
+    BOSSA_NOVA,
     DESCONEHCIDO;
 }
