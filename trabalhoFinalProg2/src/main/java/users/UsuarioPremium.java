@@ -20,7 +20,7 @@ public class UsuarioPremium extends Usuario {
     }
 
     @Override
-    public void listarPlaylists() {
+    public void exibirPlaylists() {
         if (super.getPlaylists().isEmpty()) {
             System.out.println("Nenhuma playlist foi encontrada.");
         } else {

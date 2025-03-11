@@ -33,7 +33,7 @@ public class Album {
         }
     }
 
-    public void exibirAlbum() {
+    public void exibirMusicas() {
         System.out.println("Exibindo álbum: " + this.nome);
         for (int i = 0; i < quantidadeMusicas; i++) {
             System.out.println(musicas[i].toString());

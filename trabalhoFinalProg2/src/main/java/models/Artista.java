@@ -23,7 +23,7 @@ public class Artista {
         this.albuns.add(album);
     }
 
-    public void listarAlbuns() {
+    public void exibirAlbuns() {
         System.out.println("Exibindo álbuns do artista: " + this.nome);
         for (Album album : this.albuns) {
             System.out.println(album.getNome());

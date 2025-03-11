@@ -25,7 +25,7 @@ public class UsuarioGratuito extends Usuario {
     }
 
     @Override
-    public void listarPlaylists() {
+    public void exibirPlaylists() {
         if (super.getPlaylists().size() >= LIMITE_PLAYLISTS) {
             throw new IllegalStateException("Limite de playlists atingido!");
         } else {

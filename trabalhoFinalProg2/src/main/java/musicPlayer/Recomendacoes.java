@@ -12,7 +12,7 @@ public class Recomendacoes {
         this.catalogo = catalogo;
     }
 
-    public ArrayList<Musica> recomendarMusica(Usuario usuario){
+    public ArrayList<Musica> recomendarMusicas(Usuario usuario){
         ArrayList<Musica> recomendacoes = new ArrayList<>();
         ArrayList<Musica> historicoUsusario = usuario.getHistoricoMusicasEscutadas();
 

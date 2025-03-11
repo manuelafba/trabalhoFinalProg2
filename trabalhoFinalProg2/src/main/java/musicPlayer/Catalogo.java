@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Catalogo {
     // Instância única da classe
-    private static Catalogo instance;
+    private static Catalogo instancia;
 
     // Lista de músicas
     private ArrayList<Musica> musicas;
@@ -20,11 +20,11 @@ public class Catalogo {
     }
 
     // Metodo estático para acessar a instância única
-    public static Catalogo getInstance() {
-        if (instance == null) {
-            instance = new Catalogo();
+    public static Catalogo getInstancia() {
+        if (instancia == null) {
+            instancia = new Catalogo();
         }
-        return instance;
+        return instancia;
     }
 
     public List<Musica> getMusicas() {

@@ -9,10 +9,10 @@ import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
 
-
+// Implementa LineListener para poder lidar com retorno do pause no momento correto em que a música parou
 public class MusicPlayer implements Reprodutivel, LineListener {
     // Instância única da classe
-    private static MusicPlayer instance;
+    private static MusicPlayer instancia;
 
     private Playlist playlist;
     private int indiceMusica;
@@ -25,11 +25,11 @@ public class MusicPlayer implements Reprodutivel, LineListener {
         this.indiceMusica = 0;
     }
 
-    public static MusicPlayer getInstance() {
-        if (instance == null){
-            instance = new MusicPlayer();
+    public static MusicPlayer getInstancia() {
+        if (instancia == null){
+            instancia = new MusicPlayer();
         }
-        return instance;
+        return instancia;
     }
 
     public Musica getMusicaAtual() {

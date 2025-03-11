@@ -21,7 +21,7 @@
             return this.musicas;
         }
 
-        public void adicionaMusica(Musica musica) {
+        public void adicionarMusica(Musica musica) {
             if (this.musicas.size() >= MAX_MUSICAS) {
                 throw new IllegalStateException("Limite máximo da playlist atingido.");
             }
@@ -33,7 +33,7 @@
             System.out.println("Música "+ musica.getNome() + " já está na playlist " + this.getNome() + ".");
         }
 
-        public void removeMusica(Musica musica) {
+        public void removerMusica(Musica musica) {
             if (this.musicas.isEmpty()) {
                 throw new NoSuchElementException("Esta playlist está vazia.");
             }
@@ -41,7 +41,7 @@
             System.out.println("Música "+ musica.getNome() + " removida da playlist " + this.getNome() + " com sucesso.");
         }
 
-        public void exibirPlaylist() {
+        public void exibirMusicas() {
             if (this.musicas.isEmpty()) {
                 System.out.println("Playlist " + this.getNome() + " está vazia.");
                 return;

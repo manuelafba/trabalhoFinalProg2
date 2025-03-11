@@ -23,7 +23,7 @@ class Main {
         Catalogo catalogo = Carregar.carregarCatalog("src/main/musics");
 
         // Cria uma instância do MusicPlayer
-        MusicPlayer musicPlayer = MusicPlayer.getInstance();
+        MusicPlayer musicPlayer = MusicPlayer.getInstancia();
 
         // Cria objeto Recomendações
         Recomendacoes recomendacoes = new Recomendacoes(catalogo);
@@ -76,7 +76,7 @@ class Main {
                             System.out.println("Usuário " + usuario.getNome() + " não possui playlists.");
                             break;
                         }
-                        usuario.listarPlaylists();
+                        usuario.exibirPlaylists();
                         System.out.print("Escolha uma playlist para adicionar a música: ");
                         String nomePlaylist = inputReader.readLine();
                         Playlist playlist = usuario.pesquisarPlaylist(nomePlaylist);
@@ -84,7 +84,7 @@ class Main {
                             System.out.println("Playlist não encontrada para esse usuário.");
                             break;
                         }
-                        playlist.adicionaMusica(resultadoBusca.getFirst());
+                        playlist.adicionarMusica(resultadoBusca.getFirst());
                         break;
 
                     } catch (IOException e) {
@@ -97,7 +97,7 @@ class Main {
                             System.out.println("Usuário " + usuario.getNome() + " não possui playlists.");
                             break;
                         }
-                        usuario.listarPlaylists();
+                        usuario.exibirPlaylists();
                         System.out.print("Escolha uma playlist para remover uma música: ");
                         String nomePlaylist = inputReader.readLine();
                         Playlist playlist = usuario.pesquisarPlaylist(nomePlaylist);
@@ -109,7 +109,7 @@ class Main {
                             System.out.println("Playlist " + playlist.getNome() + " está vazia.");
                             break;
                         }
-                        playlist.exibirPlaylist();
+                        playlist.exibirMusicas();
                         System.out.print("Digite o nome da música que deseja remover: ");
                         String nomeMusica = inputReader.readLine();
                         Musica musica = playlist.buscarMusica(nomeMusica);
@@ -117,7 +117,7 @@ class Main {
                             System.out.println("Música " + nomeMusica + " não encontrada na playlist " + playlist.getNome() + ".");
                             break;
                         }
-                        playlist.removeMusica(musica);
+                        playlist.removerMusica(musica);
                         break;
                     } catch (IOException e) {
                         System.out.println("Erro ao ler a entrada: " + e.getMessage());
@@ -128,7 +128,7 @@ class Main {
                             System.out.println("Usuário " + usuario.getNome() + " não possui playlists para reproduzir.");
                             break;
                         }
-                        usuario.listarPlaylists();
+                        usuario.exibirPlaylists();
                         System.out.print("Escolha uma playlist para reproduzir: ");
                         String nomePlaylist = inputReader.readLine();
                         Playlist playlist = usuario.pesquisarPlaylist(nomePlaylist);
@@ -208,7 +208,7 @@ class Main {
                             System.out.println("Você ainda não escutou músicas para basear as recomendações.");
                             break;
                         }
-                        ArrayList<Musica> recomendado = recomendacoes.recomendarMusica(usuario);
+                        ArrayList<Musica> recomendado = recomendacoes.recomendarMusicas(usuario);
                         System.out.println("---- Recomendações para você ----");
                         for (Musica musica : recomendado) {
                             System.out.println(musica.toString());

@@ -4,7 +4,6 @@ import models.Playlist;
 import models.Musica;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class Usuario {
     private final String nome;
@@ -29,10 +28,6 @@ public abstract class Usuario {
         return this.historicoMusicasEscutadas;
     }
 
-    public abstract void criarPlaylist(String nomePlaylist);
-
-    public abstract void listarPlaylists();
-
     public Playlist pesquisarPlaylist(String nomePlaylist) {
         for (Playlist playlist : this.playlists) {
             if (playlist.getNome().equalsIgnoreCase(nomePlaylist)) {
@@ -44,6 +39,10 @@ public abstract class Usuario {
     public void adicionarMusicaHistorico(Musica musica) {
         this.historicoMusicasEscutadas.add(musica);
     }
+
+    public abstract void criarPlaylist(String nomePlaylist);
+
+    public abstract void exibirPlaylists();
 
     public abstract String getTipoUsuario();
 }
