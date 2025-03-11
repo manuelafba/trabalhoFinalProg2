@@ -8,9 +8,8 @@ import java.util.List;
 
 public abstract class Usuario {
     private final String nome;
-    private List<Playlist> playlists;
-    private boolean podeAvancar;
-    private List<Musica> historicoMusicasEscutadas;
+    private ArrayList<Playlist> playlists;
+    private ArrayList<Musica> historicoMusicasEscutadas;
 
     public Usuario(String nome) {
         this.nome = nome;
@@ -22,43 +21,26 @@ public abstract class Usuario {
         return this.nome;
     }
 
-    public List<Playlist> getPlaylists() {
+    public ArrayList<Playlist> getPlaylists() {
         return this.playlists;
     }
 
-    public void setPodeAvancar(Boolean podeAvancar) {
-        this.podeAvancar = podeAvancar;
-    }
-
-    public boolean getPodeAvancar() {
-        return this.podeAvancar;
-    }
-
-    public List<Musica> getHistoricoMusicasEscutadas() {
+    public ArrayList<Musica> getHistoricoMusicasEscutadas() {
         return this.historicoMusicasEscutadas;
     }
 
-    public void criarPlaylist(String nomePlaylist) {
-        if (nomePlaylist == null) {
-            throw new IllegalArgumentException("O nome da playlist não pode ser vazio");
-        } else {
-            Playlist playlist = new Playlist(nomePlaylist);
-            this.playlists.add(playlist);
-            System.out.println("Playlist " +nomePlaylist + " criada com sucesso!");
-        }
-    }
+    public abstract void criarPlaylist(String nomePlaylist);
 
-    public void listarPlaylists() {
-        if (playlists.isEmpty()) {
-            System.out.println("Nenhuma playlist foi encontrada.");
-        } else {
-            System.out.println("Playlists de " + this.nome + ":");
-            for (int i = 0; i <= playlists.size() - 1; i++) {
-                System.out.println(i+ " - " + this.playlists.get(i).getNome());
+    public abstract void listarPlaylists();
+
+    public Playlist pesquisarPlaylist(String nomePlaylist) {
+        for (Playlist playlist : this.playlists) {
+            if (playlist.getNome().equalsIgnoreCase(nomePlaylist)) {
+                return playlist;
             }
         }
+        return null;
     }
-
     public void adicionarMusicaHistorico(Musica musica) {
         this.historicoMusicasEscutadas.add(musica);
     }

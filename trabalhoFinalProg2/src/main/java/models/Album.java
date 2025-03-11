@@ -2,11 +2,11 @@ package models;
 
 public class Album {
     private final String nome;
-    private final String artista;
+    private final Artista artista;
     private final Musica[] musicas;
     private int quantidadeMusicas = 0;
 
-    public Album(String nome, String artista, int tamanhoAlbum) {
+    public Album(String nome, Artista artista, int tamanhoAlbum) {
         this.nome = nome;
         this.artista = artista;
         this.musicas = new Musica[tamanhoAlbum];
@@ -16,7 +16,7 @@ public class Album {
         return this.nome;
     }
 
-    public String getArtista() {
+    public Artista getArtista() {
         return this.artista;
     }
 

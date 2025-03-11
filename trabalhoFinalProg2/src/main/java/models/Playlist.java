@@ -23,22 +23,42 @@
 
         public void adicionaMusica(Musica musica) {
             if (this.musicas.size() >= MAX_MUSICAS) {
-                throw new IllegalStateException("Limite máximo da playlist atingido");
+                throw new IllegalStateException("Limite máximo da playlist atingido.");
             }
-            this.musicas.add(musica);
+            if (!this.musicas.contains(musica)) {
+                this.musicas.add(musica);
+                System.out.println("Música "+ musica.getNome() + " adicionada na playlist " + this.getNome() + " com sucesso.");
+                return;
+            }
+            System.out.println("Música "+ musica.getNome() + " já está na playlist " + this.getNome() + ".");
         }
 
         public void removeMusica(Musica musica) {
             if (this.musicas.isEmpty()) {
-                throw new NoSuchElementException("Esta playlist está vazia");
+                throw new NoSuchElementException("Esta playlist está vazia.");
             }
             this.musicas.remove(musica);
+            System.out.println("Música "+ musica.getNome() + " removida da playlist " + this.getNome() + " com sucesso.");
         }
 
         public void exibirPlaylist() {
-            System.out.println("Exibindo playlist: " + this.nome);
-            for (Musica musica : this.musicas) {
-                System.out.println(musica.toString());
+            if (this.musicas.isEmpty()) {
+                System.out.println("Playlist " + this.getNome() + " está vazia.");
+                return;
             }
+            System.out.println("---- Exibindo playlist: " + this.nome + " ----");
+            for (Musica musica : this.musicas) {
+                System.out.println("- " + musica.toString());
+
+            }
+        }
+
+        public Musica buscarMusica(String nomeMusica) {
+            for (Musica musica : this.musicas) {
+                if (musica.getNome().equalsIgnoreCase(nomeMusica)) {
+                    return musica;
+                }
+            }
+            return null;
         }
     }
