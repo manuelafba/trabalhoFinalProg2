@@ -1,68 +1,86 @@
 package musicPlayer;
 
 import enums.Generos;
-import models.Album;
-import models.Artista;
 import models.Musica;
-
+import models.Artista;
+import models.Album;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
 public class Catalogo {
+    // Instância única da classe
+    private static Catalogo instancia;
+
+    // Lista de músicas
     private ArrayList<Musica> musicas;
 
-    public Catalogo() {
-        this.musicas = new ArrayList<Musica>();
+    // Construtor privado para evitar instanciação externa
+    private Catalogo() {
+        this.musicas = new ArrayList<>();
     }
 
-    public ArrayList<Musica> getMusicas() {
-        return this.musicas;
+    // Metodo estático para acessar a instância única
+    public static Catalogo getInstancia() {
+        if (instancia == null) {
+            instancia = new Catalogo();
+        }
+        return instancia;
     }
 
+    public List<Musica> getMusicas() {
+        return musicas;
+    }
+
+    // Métodos da classe
     public void adicionarMusica(Musica musica) {
         this.musicas.add(musica);
     }
 
-    public ArrayList<Musica> buscarMusica(String nome){
-        ArrayList<Musica> musicasFiltradas = new ArrayList<Musica>();
+    // Metodos sobrecarregados para realizar a busca de músicas por diversos critérios diferentes
+    public ArrayList<Musica> buscarMusica(Generos genero) {
+        ArrayList<Musica> musicasFiltradas = new ArrayList<>();
         for (Musica musica : this.musicas) {
-            if (Objects.equals(musica.getNome(), nome)){
+            if (musica.getGeneroMusical() == genero) {
                 musicasFiltradas.add(musica);
             }
         }
         return musicasFiltradas;
     }
 
-    public ArrayList<Musica> buscarMusica(Generos genero){
-        ArrayList<Musica> musicasFiltradas = new ArrayList<Musica>();
+    public ArrayList<Musica> buscarMusica(Artista artista) {
+        ArrayList<Musica> musicasFiltradas = new ArrayList<>();
         for (Musica musica : this.musicas) {
-            if (musica.getGeneroMusical() == genero){
+            if (musica.getArtista().equals(artista)) {
                 musicasFiltradas.add(musica);
             }
         }
         return musicasFiltradas;
     }
 
-    public ArrayList<Musica> buscarMusica(Artista artista){
-        ArrayList<Musica> musicasFiltradas = new ArrayList<Musica>();
+    public ArrayList<Musica> buscarMusica(Album album) {
+        ArrayList<Musica> musicasFiltradas = new ArrayList<>();
         for (Musica musica : this.musicas) {
-            if (Objects.equals(musica.getArtista(), artista.getNome())){
+            if (musica.getAlbum().equals(album)) {
                 musicasFiltradas.add(musica);
             }
         }
         return musicasFiltradas;
     }
 
-    public ArrayList<Musica> buscarMusica(Album album){
-        ArrayList<Musica> musicasFiltradas = new ArrayList<Musica>();
+    public ArrayList<Musica> buscarMusica(String nome) {
+        ArrayList<Musica> musicasFiltradas = new ArrayList<>();
         for (Musica musica : this.musicas) {
-            if (Objects.equals(musica.getAlbum(), album.getNome())){
+            if (musica.getNome().equalsIgnoreCase(nome)) { // Verifica se são iguais sem case sensitive
                 musicasFiltradas.add(musica);
             }
         }
         return musicasFiltradas;
     }
 
-
-
+    public void exibirCatalogo() {
+        System.out.println("---- Catálogo de músicas disponíveis ----");
+        for (Musica musica : this.musicas) {
+            System.out.println(musica.toString());
+        }
+    }
 }

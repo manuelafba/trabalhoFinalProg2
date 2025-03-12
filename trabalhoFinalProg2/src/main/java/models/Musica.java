@@ -3,13 +3,13 @@ import enums.Generos;
 
 public class Musica {
     private final String nome;
-    private final String artista;
-    private final String album;
+    private final Artista artista;
+    private final Album album;
     private final Generos generoMusical;
     private final String diretorio;
     private final int duracaoSegundos;
 
-    public Musica(String nome, String artista, String album, Generos generoMusical, String diretorio, int duracaoSegundos) {
+    public Musica(String nome, Artista artista, Album album, Generos generoMusical, String diretorio, int duracaoSegundos) {
         this.nome = nome;
         this.artista = artista;
         this.album = album;
@@ -22,11 +22,11 @@ public class Musica {
         return this.nome;
     }
 
-    public String getArtista() {
+    public Artista getArtista() {
         return this.artista;
     }
 
-    public String getAlbum() {
+    public Album getAlbum() {
         return this.album;
     }
 
@@ -44,8 +44,8 @@ public class Musica {
 
     public String toString() {
         return "Música: " + this.nome +
-                " - Artista: " + this.artista +
-                " - Álbum: " + this.album +
+                " - Artista: " + this.artista.getNome() +
+                " - Álbum: " + this.album.getNome() +
                 " - Gênero: " + this.generoMusical +
                 " - Duração: " + this.duracaoSegundos + "s";
     }
