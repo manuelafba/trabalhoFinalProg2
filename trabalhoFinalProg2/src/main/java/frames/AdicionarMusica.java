@@ -50,7 +50,13 @@ public class AdicionarMusica extends JFrame implements ActionListener {
         padding.add(voltar);
 
         // Tabela de músicas
-        tableModel = new DefaultTableModel();
+        tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
         tableModel.addColumn("Música");
         tableModel.addColumn("Artista");
         tableModel.addColumn("Álbum");

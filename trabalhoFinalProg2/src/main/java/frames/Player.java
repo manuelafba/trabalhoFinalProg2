@@ -49,13 +49,19 @@ public class Player extends JFrame implements ActionListener {
         voltar.addActionListener(this);
         padding.add(voltar);
 
-        // Tabela de músicas
-        tableModel = new DefaultTableModel();
+        // Tabela de músicas (não editável)
+        tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Torna todas as células não editáveis
+            }
+        };
         tableModel.addColumn("Música");
         tableModel.addColumn("Artista");
         tableModel.addColumn("Álbum");
 
         tabelaMusicas = new JTable(tableModel);
+        tabelaMusicas.setFocusable(false); // Impede que a tabela seja focada
         JScrollPane scrollPane = new JScrollPane(tabelaMusicas);
 
         // Rótulo para exibir a música atual
@@ -103,6 +109,7 @@ public class Player extends JFrame implements ActionListener {
         this.add(bottomPanel, BorderLayout.SOUTH);
 
         carregarMusicas();
+        atualizarEstadoPause(); // Atualiza o estado do botão "Pause" ao abrir a janela
         this.setVisible(true);
     }
 
@@ -121,10 +128,20 @@ public class Player extends JFrame implements ActionListener {
     private void atualizarMusicaAtual() {
         MusicPlayer player = MusicPlayer.getInstancia();
         Musica musicaAtual = player.getMusicaAtual();
+        usuario.adicionarMusicaHistorico(musicaAtual);
         if (musicaAtual != null) {
             musicaAtualLabel.setText("Tocando agora: " + musicaAtual.getNome());
         } else {
             musicaAtualLabel.setText("Nenhuma música tocando");
+        }
+    }
+
+    private void atualizarEstadoPause() {
+        MusicPlayer player = MusicPlayer.getInstancia();
+        if (player.getClip() != null && player.getClip().isRunning()) {
+            pause.setText("Pause"); // Se estiver tocando, o botão deve mostrar "Pause"
+        } else {
+            pause.setText("Play"); // Se estiver pausado ou parado, o botão deve mostrar "Play"
         }
     }
 
@@ -136,27 +153,19 @@ public class Player extends JFrame implements ActionListener {
             this.dispose();
             new Playlists(menu, usuario);
         } else if (e.getSource() == tocarMusica) {
-            int linhaSelecionada = tabelaMusicas.getSelectedRow();
-            if (linhaSelecionada != -1) {
-                // Obtém a música selecionada da tabela
-                Musica musicaSelecionada = playlist.getMusicas().get(linhaSelecionada);
+            // Carrega a playlist no MusicPlayer
+            player.carregarPlaylist(playlist);
 
-                // Carrega a playlist no MusicPlayer
-                player.carregarPlaylist(playlist);
+            // Inicia a reprodução da playlist a partir da primeira música
+            player.play();
 
-                // Inicia a reprodução da playlist a partir da música selecionada
-                player.play();
+            // Atualiza o rótulo da música atual
+            atualizarMusicaAtual();
 
-                // Atualiza o rótulo da música atual
-                atualizarMusicaAtual();
+            // Altera o texto do botão para "Pause"
+            pause.setText("Pause");
 
-                // Altera o texto do botão para "Pause"
-                pause.setText("Pause");
-
-                JOptionPane.showMessageDialog(this, "Tocando playlist a partir de: " + musicaSelecionada.getNome(), "Tocando Playlist", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(this, "Selecione uma música para tocar!", "Aviso", JOptionPane.WARNING_MESSAGE);
-            }
+            JOptionPane.showMessageDialog(this, "Tocando playlist: " + playlist.getNome(), "Tocando Playlist", JOptionPane.INFORMATION_MESSAGE);
         } else if (e.getSource() == pause) {
             if (player.getClip() != null && player.getClip().isRunning()) {
                 player.pause();

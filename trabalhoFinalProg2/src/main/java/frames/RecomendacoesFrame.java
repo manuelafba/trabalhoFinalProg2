@@ -32,14 +32,15 @@ public class RecomendacoesFrame extends JFrame implements ActionListener {
         // Configuração da janela
         this.setTitle("Music Player");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setSize(1080, 720);
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH); // Inicializa o programa em tela cheia
+        this.setSize(1080,720); // Tamanho padrão caso o programa seja minimizado
         this.setLayout(new BorderLayout());
         this.getContentPane().setBackground(new Color(255, 255, 255));
 
         // Painel superior com o botão de voltar
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        padding.setBackground(Color.GRAY);
-        padding.setPreferredSize(new Dimension(padding.getWidth(), 100));
+        padding.setBackground(Color.white);
+        padding.setPreferredSize(new Dimension(padding.getWidth(), 70));
 
         voltar = new JButton("Voltar");
         voltar.setPreferredSize(new Dimension(100, 40));
@@ -50,7 +51,13 @@ public class RecomendacoesFrame extends JFrame implements ActionListener {
         padding.add(voltar);
 
         // Tabela de recomendações
-        tableModel = new DefaultTableModel();
+        tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
         tableModel.addColumn("Música");
         tableModel.addColumn("Artista");
         tableModel.addColumn("Álbum");

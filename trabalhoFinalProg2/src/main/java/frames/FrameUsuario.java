@@ -51,23 +51,25 @@ public class FrameUsuario extends JFrame implements ActionListener {
 
         JLabel usr = new JLabel("Nome: " + nomeUsr, JLabel.CENTER);
         usr.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Font fonteA = usr.getFont().deriveFont(30f); // Fonte menor
-        usr.setFont(fonteA);
+        Font fonteLabel = usr.getFont().deriveFont(26f); // Fonte menor para as labels
+        usr.setFont(fonteLabel);
         painelTextos.add(usr);
 
         JLabel conta = new JLabel("Plano: " + tipoConta, JLabel.CENTER);
         conta.setAlignmentX(Component.CENTER_ALIGNMENT);
-        conta.setFont(fonteA);
+        conta.setFont(fonteLabel);
         painelTextos.add(conta);
 
         JLabel playlistsLabel = new JLabel("Playlists:", JLabel.CENTER);
         playlistsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        playlistsLabel.setFont(fonteA);
+        playlistsLabel.setFont(fonteLabel);
         painelTextos.add(playlistsLabel);
 
+        // TextArea para playlists
         JTextArea playlistsTextArea = new JTextArea();
-        playlistsTextArea.setEditable(false);
-        playlistsTextArea.setFont(new Font("Arial", Font.PLAIN, 18));
+        playlistsTextArea.setEditable(false); // Impede que o usuário escreva
+        Font fonteTextArea = playlistsTextArea.getFont().deriveFont(20f); // Fonte maior para os TextArea
+        playlistsTextArea.setFont(fonteTextArea);
         playlistsTextArea.setBackground(Color.WHITE);
 
         if (!usuario.getPlaylists().isEmpty()) {
@@ -90,12 +92,13 @@ public class FrameUsuario extends JFrame implements ActionListener {
 
         JLabel historicoLabel = new JLabel("Histórico de Músicas Escutadas:", JLabel.CENTER);
         historicoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        historicoLabel.setFont(fonteA);
+        historicoLabel.setFont(fonteLabel);
         painelTextos.add(historicoLabel);
 
+        // TextArea para histórico
         JTextArea historicoTextArea = new JTextArea();
-        historicoTextArea.setEditable(false);
-        historicoTextArea.setFont(new Font("Arial", Font.PLAIN, 18));
+        historicoTextArea.setEditable(false); // Impede que o usuário escreva
+        historicoTextArea.setFont(fonteTextArea); // Fonte maior para os TextArea
         historicoTextArea.setBackground(Color.WHITE);
 
         if (!usuario.getHistoricoMusicasEscutadas().isEmpty()) {
@@ -123,7 +126,6 @@ public class FrameUsuario extends JFrame implements ActionListener {
         voltar.setFocusable(false);
         voltar.addActionListener(this);
         padding.add(voltar);
-
 
         frameUsuario.add(padding, BorderLayout.NORTH);
         frameUsuario.add(painelIcon, BorderLayout.CENTER);
