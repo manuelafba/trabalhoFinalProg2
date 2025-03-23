@@ -1,6 +1,7 @@
 package frames;
 
 import models.Musica;
+import musicPlayer.Carregar;
 import musicPlayer.Catalogo;
 import users.Usuario;
 
@@ -13,7 +14,7 @@ import java.awt.event.ActionListener;
 public class FrameCatalogo extends JFrame implements ActionListener {
 
     final JFrame catalogo = new JFrame();
-    private JButton voltar = new JButton();
+    private JButton voltar = new JButton("Voltar");
     private JTable tabelaMsc;
     private DefaultTableModel tableModel;
     private Menu menu;
@@ -32,17 +33,23 @@ public class FrameCatalogo extends JFrame implements ActionListener {
         catalogo.getContentPane().setBackground(new Color(255,255,255));// cor janela
 
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        padding.setBackground(Color.GRAY);
-        padding.setPreferredSize(new Dimension(padding.getWidth(), 50));
+        padding.setBackground(Color.white);
+        padding.setPreferredSize(new Dimension(padding.getWidth(), 70));
 
-        voltar.setPreferredSize(new Dimension(40,40));
-        Font fonteB = voltar.getFont().deriveFont(35f);
+        voltar.setPreferredSize(new Dimension(100, 40));
+        Font fonteB = voltar.getFont().deriveFont(20f);
         voltar.setFont(fonteB);
         voltar.setFocusable(false);
         voltar.addActionListener(this);
         padding.add(voltar);
 
-        tableModel = new DefaultTableModel();
+        tableModel = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
         tableModel.addColumn("Música");
         tableModel.addColumn("Artista");
         tableModel.addColumn("Álbum");
@@ -82,7 +89,7 @@ public class FrameCatalogo extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==voltar) {
             catalogo.dispose();
-
+            new Menu(menu.getCadastroFrame(), usuario);
         }
     }
 }

@@ -1,5 +1,6 @@
 package frames;
 
+import musicPlayer.Catalogo;
 import users.Usuario;
 
 import javax.swing.*;
@@ -12,6 +13,7 @@ public class Menu extends JFrame implements ActionListener {
     final JFrame menu = new JFrame();
     private Cadastro cadastroFrame;
     private Usuario usuario;
+    private Catalogo catalogoC;
 
     private JButton catalogo = new JButton();
     private JButton criarPlaylist = new JButton();
@@ -24,6 +26,7 @@ public class Menu extends JFrame implements ActionListener {
     public Menu(Cadastro cadastroFrame, Usuario usuario) {
         this.cadastroFrame = cadastroFrame;
         this.usuario = usuario;
+        this.catalogoC = Catalogo.getInstancia();
 
         // Configuração da janela
         menu.setTitle("Music Player"); // Título da janela
@@ -34,11 +37,11 @@ public class Menu extends JFrame implements ActionListener {
         menu.getContentPane().setBackground(new Color(255,255,255));// cor janela
 
         JPanel padding = new JPanel();
-        padding.setBackground(Color.GRAY);
+        padding.setBackground(Color.white);
         padding.setPreferredSize(new Dimension(100,150));
 
         JPanel painelBordaTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        painelBordaTop.setBackground(Color.red);
+        painelBordaTop.setBackground(Color.white);
         painelBordaTop.setPreferredSize(new Dimension(100,300));
         painelBordaTop.setLayout(new BoxLayout(painelBordaTop, BoxLayout.Y_AXIS));
 
@@ -46,11 +49,11 @@ public class Menu extends JFrame implements ActionListener {
         menus.setLayout(new BoxLayout(menus, BoxLayout.Y_AXIS));
 
         JPanel painelSelecao1 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelSelecao1.setBackground(Color.blue);
+        painelSelecao1.setBackground(Color.white);
         painelSelecao1.setPreferredSize(new Dimension(100,150));
 
         JPanel painelSelecao2 = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelSelecao2.setBackground(Color.yellow);
+        painelSelecao2.setBackground(Color.white);
         painelSelecao2.setPreferredSize(new Dimension(50,280));
 
         JLabel mainIcon = new JLabel("Music Player", JLabel.CENTER);
@@ -92,11 +95,11 @@ public class Menu extends JFrame implements ActionListener {
         reproduzirPlaylist.setText("<html>Reproduzir<br>Playlists</html>");
         reproduzirPlaylist.setFont(fonteB);
         reproduzirPlaylist.setFocusable(false);
-        removerMscPlaylist.addActionListener(this);
+        reproduzirPlaylist.addActionListener(this);
         painelSelecao2.add(reproduzirPlaylist);
 
-        recomendacoes.setPreferredSize(new Dimension(230,100));
-        recomendacoes.setText("<html>Reproduzir<br>Playlists</html>");
+        recomendacoes.setPreferredSize(new Dimension(270,100));
+        recomendacoes.setText("<html>Recomendações</html>");
         recomendacoes.setFont(fonteB);
         recomendacoes.setFocusable(false);
         recomendacoes.addActionListener(this);
@@ -135,9 +138,11 @@ public class Menu extends JFrame implements ActionListener {
         }
         if(e.getSource()==adicionaMscPlaylist) {
             menu.dispose();
+            new AdicionarMusica(this,usuario,catalogoC);
         }
         if(e.getSource()==removerMscPlaylist) {
             menu.dispose();
+            new RemoverMusica(this, usuario);
         }
         if(e.getSource()==reproduzirPlaylist) {
             menu.dispose();
@@ -145,6 +150,7 @@ public class Menu extends JFrame implements ActionListener {
         }
         if(e.getSource()==recomendacoes) {
             menu.dispose();
+            new RecomendacoesFrame(this,usuario,catalogoC);
         }
         if(e.getSource()==dadosUsr) {
             menu.dispose();

@@ -22,6 +22,9 @@ import java.util.Objects;
 
 class Main {
     public static void main(String[] args) {
+        Catalogo catalogo = Carregar.carregarCatalog("C:\\Users\\Thaís\\Documents\\Faculdade\\finalProgII\\trabalhoFinalProg2\\src\\main\\musics");
+        MusicPlayer musicPlayer = MusicPlayer.getInstancia();
+        Recomendacoes recomendacoes = new Recomendacoes(catalogo);
         new EscolhaUsuario();
         /*
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
@@ -30,7 +33,7 @@ class Main {
         Catalogo catalogo = Carregar.carregarCatalog("src/main/musics");
 
         // Cria uma instância do MusicPlayer
-        MusicPlayer musicPlayer = MusicPlayer.getInstancia();
+
 
         // Cria objeto Recomendações
         Recomendacoes recomendacoes = new Recomendacoes(catalogo);

@@ -13,7 +13,7 @@ public class Cadastro extends JFrame implements ActionListener {
 
     final JFrame cadastro = new JFrame();
     private JButton prosseguir = new JButton();
-    public JTextField inputNome = new JTextField(5);
+    public JTextField inputNome = new JTextField(20); // Aumentei o número de colunas
     private EscolhaUsuario escolhaUsuarioFrame;
 
     public Cadastro(EscolhaUsuario escolhaUsuarioFrame) {
@@ -23,44 +23,53 @@ public class Cadastro extends JFrame implements ActionListener {
         cadastro.setTitle("Music Player"); // Título da janela
         cadastro.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao fechar a janela
         cadastro.setExtendedState(JFrame.MAXIMIZED_BOTH); // Inicializa o programa em tela cheia
-        cadastro.setSize(1080,720); // Tamanho padrão caso o programa seja minimizado
+        cadastro.setSize(1080, 720); // Tamanho padrão caso o programa seja minimizado
         cadastro.setLayout(new BorderLayout()); // Responsividade
-        cadastro.getContentPane().setBackground(new Color(255,255,255));// cor janela
+        cadastro.getContentPane().setBackground(new Color(255, 255, 255));// cor janela
 
-        JPanel painelTop = new JPanel();
-        painelTop.setBackground(Color.red);
-        painelTop.setPreferredSize(new Dimension(100,200));
-        painelTop.setLayout(new BoxLayout(painelTop, BoxLayout.Y_AXIS));
+        // Painel superior (NORTH)
+        JPanel painelTop = new JPanel(new BorderLayout()); // Usando BorderLayout para o painel principal
+        painelTop.setBackground(Color.white);
+        painelTop.setPreferredSize(new Dimension(100, 300)); // Aumentei a altura
 
-        JPanel painelTexto = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelTexto.setBackground(Color.green);
-        painelTexto.setPreferredSize(new Dimension(100,80));
-        painelTexto.setLayout(new BoxLayout(painelTexto, BoxLayout.Y_AXIS));
+        // Painel interno para centralizar as labels
+        JPanel painelInterno = new JPanel(new GridBagLayout()); // Usando GridBagLayout para centralização
+        painelInterno.setOpaque(false); // Fundo transparente
 
-        JPanel painelBotao = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelBotao.setBackground(Color.blue);
-        painelBotao.setPreferredSize(new Dimension(100,250));
-
-        JPanel texto = new JPanel();
-        texto.setPreferredSize(new Dimension(300,50));
-
-        inputNome.setPreferredSize(new Dimension(100,30));
-        texto.add(inputNome);
-        painelTexto.add(texto, Component.CENTER_ALIGNMENT);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.insets = new Insets(10, 10, 10, 10); // Espaçamento entre os componentes
 
         JLabel mainIcon = new JLabel("Music Player", JLabel.CENTER);
         mainIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
         Font fonteT = mainIcon.getFont().deriveFont(80f);
         mainIcon.setFont(fonteT);
-        painelTop.add(mainIcon);
+        painelInterno.add(mainIcon, gbc);
 
+        gbc.gridy = 1; // Próxima linha
         JLabel descricao = new JLabel("Insira aqui seu nome: ", JLabel.CENTER);
         descricao.setAlignmentX(Component.CENTER_ALIGNMENT);
         Font fonteA = descricao.getFont().deriveFont(35f);
         descricao.setFont(fonteA);
-        painelTop.add(descricao);
+        painelInterno.add(descricao, gbc);
 
-        prosseguir.setPreferredSize(new Dimension(300,80));
+        painelTop.add(painelInterno, BorderLayout.CENTER); // Adiciona o painel interno ao painelTop
+
+        // Painel central (CENTER)
+        JPanel painelTexto = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelTexto.setBackground(Color.white);
+        painelTexto.setPreferredSize(new Dimension(100, 100));
+
+        inputNome.setPreferredSize(new Dimension(400, 40)); // Aumentei o tamanho do JTextField
+        painelTexto.add(inputNome);
+
+        // Painel inferior (SOUTH)
+        JPanel painelBotao = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        painelBotao.setBackground(Color.white);
+        painelBotao.setPreferredSize(new Dimension(100, 300)); // Aumentei a altura
+
+        prosseguir.setPreferredSize(new Dimension(300, 80));
         prosseguir.setText("Prosseguir");
         Font fonteB = prosseguir.getFont().deriveFont(35f);
         prosseguir.setFont(fonteB);
@@ -68,6 +77,7 @@ public class Cadastro extends JFrame implements ActionListener {
         prosseguir.addActionListener(this);
         painelBotao.add(prosseguir);
 
+        // Adiciona os painéis à janela
         cadastro.add(painelTop, BorderLayout.NORTH);
         cadastro.add(painelTexto, BorderLayout.CENTER);
         cadastro.add(painelBotao, BorderLayout.SOUTH);
@@ -77,15 +87,15 @@ public class Cadastro extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==prosseguir) {
+        if (e.getSource() == prosseguir) {
             String nomeUsuario = inputNome.getText().trim();
             Usuario usuario;
 
-            if(nomeUsuario.isEmpty()) {
+            if (nomeUsuario.isEmpty()) {
                 JOptionPane.showMessageDialog(this, "O seu nome não pode ser vazio", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if(escolhaUsuarioFrame.getEscolhaUsr().equals("Comum")) {
+            if (escolhaUsuarioFrame.getEscolhaUsr().equals("Comum")) {
                 usuario = new UsuarioGratuito(nomeUsuario);
             } else {
                 usuario = new UsuarioPremium(nomeUsuario);
@@ -95,5 +105,4 @@ public class Cadastro extends JFrame implements ActionListener {
             new Menu(this, usuario);
         }
     }
-
 }

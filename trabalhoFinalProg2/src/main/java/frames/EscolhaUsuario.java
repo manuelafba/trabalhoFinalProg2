@@ -26,16 +26,16 @@ public class EscolhaUsuario extends JFrame implements ActionListener {
         escolhaUsuario.setIconImage(icon.getImage());
 
         JPanel painelBorda = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        painelBorda.setBackground(Color.red);
+        painelBorda.setBackground(Color.white);
         painelBorda.setPreferredSize(new Dimension(100,100));
 
         JPanel painelLogo = new JPanel();
-        painelLogo.setBackground(Color.green);
+        painelLogo.setBackground(Color.white);
         painelLogo.setPreferredSize(new Dimension(100,80));
         painelLogo.setLayout(new BoxLayout(painelLogo, BoxLayout.Y_AXIS));
 
         JPanel painelSelecao = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelSelecao.setBackground(Color.blue);
+        painelSelecao.setBackground(Color.white);
         painelSelecao.setPreferredSize(new Dimension(100,350));
 
         botaoUsrNormal = new JButton();

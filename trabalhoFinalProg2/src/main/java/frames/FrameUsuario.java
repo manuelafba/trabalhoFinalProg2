@@ -1,8 +1,8 @@
 package frames;
 
+import models.Musica;
+import models.Playlist;
 import users.Usuario;
-import users.UsuarioGratuito;
-import users.UsuarioPremium;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,7 +15,7 @@ public class FrameUsuario extends JFrame implements ActionListener {
     private Menu menu;
     private Usuario usuario;
 
-    private JButton voltar = new JButton();
+    private JButton voltar = new JButton("Voltar");
 
     public FrameUsuario(Menu menu, Usuario usuario) {
         this.menu = menu;
@@ -25,29 +25,33 @@ public class FrameUsuario extends JFrame implements ActionListener {
         frameUsuario.setTitle("Music Player"); // Título da janela
         frameUsuario.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao fechar a janela
         frameUsuario.setExtendedState(JFrame.MAXIMIZED_BOTH); // Inicializa o programa em tela cheia
-        frameUsuario.setSize(1080,720); // Tamanho padrão caso o programa seja minimizado
+        frameUsuario.setSize(1080, 720); // Tamanho padrão caso o programa seja minimizado
         frameUsuario.setLayout(new BorderLayout()); // Responsividade
-        frameUsuario.getContentPane().setBackground(new Color(255,255,255));// cor janela
+        frameUsuario.getContentPane().setBackground(new Color(255, 255, 255)); // Fundo branco
 
+        // Painel superior com o botão de voltar
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        padding.setBackground(Color.GRAY);
+        padding.setBackground(Color.WHITE);
         padding.setPreferredSize(new Dimension(padding.getWidth(), 100));
 
+        // Painel central com o ícone "Music Player"
         JPanel painelIcon = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        painelIcon.setBackground(Color.green);
-        painelIcon.setPreferredSize(new Dimension(100,200));
+        painelIcon.setBackground(Color.WHITE); // Fundo branco
+        painelIcon.setPreferredSize(new Dimension(100, 200));
 
-        JPanel painelTextos = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        painelTextos.setBackground(Color.red);
-        painelTextos.setPreferredSize(new Dimension(100,400));
+        // Painel de textos (informações do usuário, playlists e histórico)
+        JPanel painelTextos = new JPanel();
+        painelTextos.setBackground(Color.WHITE);
         painelTextos.setLayout(new BoxLayout(painelTextos, BoxLayout.Y_AXIS));
+        painelTextos.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
+        // Informações do usuário
         String nomeUsr = this.usuario.getNome();
         String tipoConta = this.usuario.getTipoUsuario();
 
         JLabel usr = new JLabel("Nome: " + nomeUsr, JLabel.CENTER);
         usr.setAlignmentX(Component.CENTER_ALIGNMENT);
-        Font fonteA = usr.getFont().deriveFont(55f);
+        Font fonteA = usr.getFont().deriveFont(30f); // Fonte menor
         usr.setFont(fonteA);
         painelTextos.add(usr);
 
@@ -56,18 +60,70 @@ public class FrameUsuario extends JFrame implements ActionListener {
         conta.setFont(fonteA);
         painelTextos.add(conta);
 
+        JLabel playlistsLabel = new JLabel("Playlists:", JLabel.CENTER);
+        playlistsLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playlistsLabel.setFont(fonteA);
+        painelTextos.add(playlistsLabel);
+
+        JTextArea playlistsTextArea = new JTextArea();
+        playlistsTextArea.setEditable(false);
+        playlistsTextArea.setFont(new Font("Arial", Font.PLAIN, 18));
+        playlistsTextArea.setBackground(Color.WHITE);
+
+        if (!usuario.getPlaylists().isEmpty()) {
+            for (Playlist playlist : usuario.getPlaylists()) {
+                playlistsTextArea.append("Nome Playlist: " + playlist.getNome() + "\n");
+                for (Musica musica : playlist.getMusicas()) {
+                    playlistsTextArea.append("   - " + musica.toString() + "\n");
+                }
+            }
+        } else {
+            playlistsTextArea.append("Nenhuma playlist criada.\n");
+        }
+
+        JScrollPane playlistsScrollPane = new JScrollPane(playlistsTextArea);
+        playlistsScrollPane.setPreferredSize(new Dimension(800, 200));
+        playlistsScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        painelTextos.add(playlistsScrollPane);
+
+        painelTextos.add(Box.createRigidArea(new Dimension(0, 20)));
+
+        JLabel historicoLabel = new JLabel("Histórico de Músicas Escutadas:", JLabel.CENTER);
+        historicoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        historicoLabel.setFont(fonteA);
+        painelTextos.add(historicoLabel);
+
+        JTextArea historicoTextArea = new JTextArea();
+        historicoTextArea.setEditable(false);
+        historicoTextArea.setFont(new Font("Arial", Font.PLAIN, 18));
+        historicoTextArea.setBackground(Color.WHITE);
+
+        if (!usuario.getHistoricoMusicasEscutadas().isEmpty()) {
+            for (Musica musica : usuario.getHistoricoMusicasEscutadas()) {
+                historicoTextArea.append("   - " + musica.toString() + "\n");
+            }
+        } else {
+            historicoTextArea.append("Histórico vazio.\n");
+        }
+
+        JScrollPane historicoScrollPane = new JScrollPane(historicoTextArea);
+        historicoScrollPane.setPreferredSize(new Dimension(800, 200));
+        historicoScrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
+        painelTextos.add(historicoScrollPane);
+
         JLabel mainIcon = new JLabel("Music Player", JLabel.CENTER);
         mainIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
         Font fonteT = mainIcon.getFont().deriveFont(80f);
         mainIcon.setFont(fonteT);
         painelIcon.add(mainIcon);
 
-        voltar.setPreferredSize(new Dimension(40,40));
-        Font fonteB = voltar.getFont().deriveFont(35f);
+        voltar.setPreferredSize(new Dimension(100, 40));
+        Font fonteB = voltar.getFont().deriveFont(20f);
         voltar.setFont(fonteB);
         voltar.setFocusable(false);
         voltar.addActionListener(this);
         padding.add(voltar);
+
 
         frameUsuario.add(padding, BorderLayout.NORTH);
         frameUsuario.add(painelIcon, BorderLayout.CENTER);
@@ -78,12 +134,9 @@ public class FrameUsuario extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource()==voltar) {
+        if (e.getSource() == voltar) {
             frameUsuario.dispose();
             new Menu(menu.getCadastroFrame(), usuario);
-
         }
     }
-
-
 }
