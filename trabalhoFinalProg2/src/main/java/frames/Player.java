@@ -158,19 +158,25 @@ public class Player extends JFrame implements ActionListener {
             this.dispose();
             new Playlists(menu, usuario);
         } else if (e.getSource() == tocarMusica) {
-            // Carrega a playlist no MusicPlayer
-            player.carregarPlaylist(playlist);
+            try {
+                // Carrega a playlist no MusicPlayer
+                player.carregarPlaylist(playlist);
 
-            // Inicia a reprodução da playlist a partir da primeira música
-            player.play();
+                // Inicia a reprodução da playlist a partir da primeira música
+                player.play();
 
-            // Atualiza o rótulo da música atual
-            atualizarMusicaAtual();
+                // Atualiza o rótulo da música atual
+                atualizarMusicaAtual();
 
-            // Altera o texto do botão para "Pause"
-            pause.setText("Pause");
+                // Altera o texto do botão para "Pause"
+                pause.setText("Pause");
+                
+                JOptionPane.showMessageDialog(this, "Tocando playlist: " + playlist.getNome(), "Tocando Playlist", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IllegalArgumentException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+            }
 
-            JOptionPane.showMessageDialog(this, "Tocando playlist: " + playlist.getNome(), "Tocando Playlist", JOptionPane.INFORMATION_MESSAGE);
+
         } else if (e.getSource() == pause) {
             if (player.getClip() != null && player.getClip().isRunning()) {
                 player.pause();

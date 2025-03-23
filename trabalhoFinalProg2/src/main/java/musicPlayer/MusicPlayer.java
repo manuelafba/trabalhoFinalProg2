@@ -58,7 +58,7 @@ public class MusicPlayer implements Reprodutivel, LineListener {
     public void play() {
         if (this.musicaAtual == null && this.caminhoMusica == null) {
             System.out.println("Nenhuma música carregada");
-            return;
+            throw new IllegalArgumentException("Nenhuma música carregada");
         }
         try{
             if (clip == null) {
