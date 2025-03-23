@@ -97,7 +97,7 @@ public class CriarPlaylists extends JFrame implements ActionListener {
                 usuario.criarPlaylist(nomePlaylist);
                 JOptionPane.showMessageDialog(this, "Playlist criada com sucesso!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
                 inputNomePlaylist.setText("");
-            } catch (IllegalStateException ex) {
+            } catch (IllegalStateException | IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
             }
         }

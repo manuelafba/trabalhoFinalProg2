@@ -13,6 +13,11 @@ public class UsuarioPremium extends Usuario {
         if (nomePlaylist == null) {
             throw new IllegalArgumentException("O nome da playlist não pode ser vazio");
         } else {
+            for (Playlist playlist : super.getPlaylists()) {
+                if (playlist.getNome().equals(nomePlaylist)) {
+                    throw new IllegalArgumentException("Já existe uma playlist com o nome " + nomePlaylist);
+                }
+            }
             Playlist playlist = new Playlist(nomePlaylist);
             super.getPlaylists().add(playlist);
             System.out.println("Playlist " +nomePlaylist + " criada com sucesso!");
