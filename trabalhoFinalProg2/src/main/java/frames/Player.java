@@ -170,7 +170,7 @@ public class Player extends JFrame implements ActionListener {
 
                 // Altera o texto do botão para "Pause"
                 pause.setText("Pause");
-                
+
                 JOptionPane.showMessageDialog(this, "Tocando playlist: " + playlist.getNome(), "Tocando Playlist", JOptionPane.INFORMATION_MESSAGE);
             } catch (IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);

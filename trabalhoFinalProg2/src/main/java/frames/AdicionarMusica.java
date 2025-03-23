@@ -137,8 +137,13 @@ public class AdicionarMusica extends JFrame implements ActionListener {
             Playlist playlistSelecionada = usuario.pesquisarPlaylist(nomePlaylist);
 
             if (playlistSelecionada != null) {
-                playlistSelecionada.adicionarMusica(musicaSelecionada);
-                JOptionPane.showMessageDialog(this, "Música adicionada à playlist: " + nomePlaylist, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                try {
+                    playlistSelecionada.adicionarMusica(musicaSelecionada);
+                    JOptionPane.showMessageDialog(this, "Música adicionada à playlist: " + nomePlaylist, "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                } catch (IllegalArgumentException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage(), "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+
             } else {
                 JOptionPane.showMessageDialog(this, "Playlist não encontrada!", "Erro", JOptionPane.ERROR_MESSAGE);
             }

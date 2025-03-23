@@ -74,7 +74,7 @@ public class FrameUsuario extends JFrame implements ActionListener {
 
         if (!usuario.getPlaylists().isEmpty()) {
             for (Playlist playlist : usuario.getPlaylists()) {
-                playlistsTextArea.append("Nome Playlist: " + playlist.getNome() + "\n");
+                playlistsTextArea.append("Playlist: " + playlist.getNome() + "\n");
                 for (Musica musica : playlist.getMusicas()) {
                     playlistsTextArea.append("   - " + musica.toString() + "\n");
                 }
