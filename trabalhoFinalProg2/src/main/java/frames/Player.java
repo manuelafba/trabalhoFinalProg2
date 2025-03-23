@@ -4,6 +4,7 @@ import models.Musica;
 import models.Playlist;
 import musicPlayer.MusicPlayer;
 import users.Usuario;
+import users.UsuarioGratuito;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -86,6 +87,10 @@ public class Player extends JFrame implements ActionListener {
         reiniciar = new JButton("Reiniciar");
         reiniciar.setFocusable(false);
         reiniciar.addActionListener(this);
+
+        if (usuario instanceof UsuarioGratuito) {
+            avancar.setEnabled(false); // Desabilita o botão "Avançar" para usuários gratuitos
+        }
 
         controlesPanel.add(voltarMusica);
         controlesPanel.add(pause);

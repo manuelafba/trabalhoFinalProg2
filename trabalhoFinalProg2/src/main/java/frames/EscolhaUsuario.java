@@ -22,8 +22,10 @@ public class EscolhaUsuario extends JFrame implements ActionListener {
         escolhaUsuario.setSize(1080,720); // Tamanho padrão caso o programa seja minimizado
         escolhaUsuario.setLayout(new BorderLayout()); // Responsividade
         escolhaUsuario.getContentPane().setBackground(new Color(255,255,255));// cor janela
-        ImageIcon icon = new ImageIcon("src/main/java/assets/icon.jpg");
-        escolhaUsuario.setIconImage(icon.getImage());
+
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        escolhaUsuario.setIconImage(icone.getImage());
+
 
         JPanel painelBorda = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelBorda.setBackground(Color.white);
