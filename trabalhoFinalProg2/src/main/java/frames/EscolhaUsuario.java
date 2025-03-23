@@ -42,7 +42,7 @@ public class EscolhaUsuario extends JFrame implements ActionListener {
 
         botaoUsrNormal = new JButton();
         botaoUsrNormal.setPreferredSize(new Dimension(300,200));
-        botaoUsrNormal.setText("Plano Comum");
+        botaoUsrNormal.setText("Plano Gratuito");
         Font fonteB = botaoUsrNormal.getFont().deriveFont(35f);
         botaoUsrNormal.setFont(fonteB);
         botaoUsrNormal.setFocusable(false);
@@ -87,7 +87,7 @@ public class EscolhaUsuario extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource()==botaoUsrNormal) {
-            setEscolhaUsr("Comum");
+            setEscolhaUsr("Gratuito");
             escolhaUsuario.dispose();
             new Cadastro(this);
         }

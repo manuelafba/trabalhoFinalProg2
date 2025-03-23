@@ -95,7 +95,7 @@ public class Cadastro extends JFrame implements ActionListener {
                 JOptionPane.showMessageDialog(this, "O seu nome não pode ser vazio", "Erro", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            if (escolhaUsuarioFrame.getEscolhaUsr().equals("Comum")) {
+            if (escolhaUsuarioFrame.getEscolhaUsr().equals("Gratuito")) {
                 usuario = new UsuarioGratuito(nomeUsuario);
             } else {
                 usuario = new UsuarioPremium(nomeUsuario);
