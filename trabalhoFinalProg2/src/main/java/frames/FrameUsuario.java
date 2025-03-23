@@ -29,6 +29,9 @@ public class FrameUsuario extends JFrame implements ActionListener {
         frameUsuario.setLayout(new BorderLayout()); // Responsividade
         frameUsuario.getContentPane().setBackground(new Color(255, 255, 255)); // Fundo branco
 
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        frameUsuario.setIconImage(icone.getImage());
+
         // Painel superior com o botão de voltar
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
         padding.setBackground(Color.WHITE);

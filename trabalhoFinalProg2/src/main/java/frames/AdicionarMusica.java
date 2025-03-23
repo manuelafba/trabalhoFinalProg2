@@ -38,6 +38,9 @@ public class AdicionarMusica extends JFrame implements ActionListener {
         adicionarMusica.setLayout(new BorderLayout()); // Responsividade
         adicionarMusica.getContentPane().setBackground(new Color(255,255,255));// cor janela
 
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        adicionarMusica.setIconImage(icone.getImage());
+
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
         padding.setBackground(Color.white);
         padding.setPreferredSize(new Dimension(100,70));

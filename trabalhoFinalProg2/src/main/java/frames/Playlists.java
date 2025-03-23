@@ -31,6 +31,9 @@ public class Playlists extends JFrame implements ActionListener {
         this.setLayout(new BorderLayout()); // Responsividade
         this.getContentPane().setBackground(new Color(255, 255, 255)); // cor janela
 
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        this.setIconImage(icone.getImage());
+
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
         padding.setBackground(Color.white);
         padding.setPreferredSize(new Dimension(padding.getWidth(), 70));

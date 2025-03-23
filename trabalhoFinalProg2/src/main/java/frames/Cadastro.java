@@ -27,6 +27,9 @@ public class Cadastro extends JFrame implements ActionListener {
         cadastro.setLayout(new BorderLayout()); // Responsividade
         cadastro.getContentPane().setBackground(new Color(255, 255, 255));// cor janela
 
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        cadastro.setIconImage(icone.getImage());
+
         // Painel superior (NORTH)
         JPanel painelTop = new JPanel(new BorderLayout()); // Usando BorderLayout para o painel principal
         painelTop.setBackground(Color.white);

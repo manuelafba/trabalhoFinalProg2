@@ -29,6 +29,9 @@ public class CriarPlaylists extends JFrame implements ActionListener {
         criarPlaylists.setLayout(new BorderLayout()); // Responsividade
         criarPlaylists.getContentPane().setBackground(Color.WHITE); // Fundo branco
 
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        criarPlaylists.setIconImage(icone.getImage());
+
         // Painel superior (NORTH)
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
         padding.setBackground(Color.WHITE); // Fundo branco

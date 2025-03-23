@@ -37,6 +37,9 @@ public class RecomendacoesFrame extends JFrame implements ActionListener {
         this.setLayout(new BorderLayout());
         this.getContentPane().setBackground(new Color(255, 255, 255));
 
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        this.setIconImage(icone.getImage());
+
         // Painel superior com o botão de voltar
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
         padding.setBackground(Color.white);

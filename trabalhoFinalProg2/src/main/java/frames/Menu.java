@@ -36,6 +36,9 @@ public class Menu extends JFrame implements ActionListener {
         menu.setLayout(new BorderLayout()); // Responsividade
         menu.getContentPane().setBackground(new Color(255,255,255));// cor janela
 
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        menu.setIconImage(icone.getImage());
+
         JPanel padding = new JPanel();
         padding.setBackground(Color.white);
         padding.setPreferredSize(new Dimension(100,150));

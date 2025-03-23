@@ -32,6 +32,9 @@ public class FrameCatalogo extends JFrame implements ActionListener {
         catalogo.setLayout(new BorderLayout()); // Responsividade
         catalogo.getContentPane().setBackground(new Color(255,255,255));// cor janela
 
+        ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
+        catalogo.setIconImage(icone.getImage());
+
         JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
         padding.setBackground(Color.white);
         padding.setPreferredSize(new Dimension(padding.getWidth(), 70));
