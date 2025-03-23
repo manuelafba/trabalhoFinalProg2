@@ -22,10 +22,16 @@ import java.util.Objects;
 
 class Main {
     public static void main(String[] args) {
-        Catalogo catalogo = Carregar.carregarCatalog("C:\\Users\\Thaís\\Documents\\Faculdade\\finalProgII\\trabalhoFinalProg2\\src\\main\\musics");
-        MusicPlayer musicPlayer = MusicPlayer.getInstancia();
-        Recomendacoes recomendacoes = new Recomendacoes(catalogo);
-        new EscolhaUsuario();
+
+        try {
+            Catalogo catalogo = Carregar.carregarCatalog("src/main/musics");
+            MusicPlayer musicPlayer = MusicPlayer.getInstancia();
+            Recomendacoes recomendacoes = new Recomendacoes(catalogo);
+            new EscolhaUsuario();
+        } catch (IllegalArgumentException e) {
+            System.err.println("Verifique o diretório de músicas passado");
+        }
+
         /*
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 

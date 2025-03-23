@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Carregar {
-    public static Catalogo carregarCatalog(String diretorio){
+    public static Catalogo carregarCatalog(String diretorio) throws IllegalArgumentException {
         Catalogo catalogo = Catalogo.getInstancia(); // Criar o catálogo vazio
         File pastaMusicas = new File(diretorio); // Ler o diretório passado
 
