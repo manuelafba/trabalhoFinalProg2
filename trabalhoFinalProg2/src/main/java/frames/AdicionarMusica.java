@@ -10,7 +10,6 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.PublicKey;
 
 public class AdicionarMusica extends JFrame implements ActionListener {
 
@@ -34,23 +33,42 @@ public class AdicionarMusica extends JFrame implements ActionListener {
         adicionarMusica.setTitle("Music Player"); // Título da janela
         adicionarMusica.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Fecha o programa ao fechar a janela
         adicionarMusica.setExtendedState(JFrame.MAXIMIZED_BOTH); // Inicializa o programa em tela cheia
-        adicionarMusica.setSize(1080,720); // Tamanho padrão caso o programa seja minimizado
+        adicionarMusica.setSize(1080, 720); // Tamanho padrão caso o programa seja minimizado
         adicionarMusica.setLayout(new BorderLayout()); // Responsividade
-        adicionarMusica.getContentPane().setBackground(new Color(255,255,255));// cor janela
+        adicionarMusica.getContentPane().setBackground(new Color(255, 255, 255));// cor janela
 
         ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
         adicionarMusica.setIconImage(icone.getImage());
 
-        JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        // Painel superior com o botão "Voltar" e a label "Adicionar Músicas"
+        JPanel padding = new JPanel(new GridBagLayout()); // Usando GridBagLayout para posicionamento preciso
         padding.setBackground(Color.white);
-        padding.setPreferredSize(new Dimension(100,70));
+        padding.setPreferredSize(new Dimension(padding.getWidth(), 70));
 
+        // Configuração do GridBagConstraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(0, 10, 0, 10); // Espaçamento entre os componentes
+
+        // Botão "Voltar"
         voltar.setPreferredSize(new Dimension(100, 40));
         Font fonteB = voltar.getFont().deriveFont(20f);
         voltar.setFont(fonteB);
         voltar.setFocusable(false);
         voltar.addActionListener(this);
-        padding.add(voltar);
+
+        gbc.gridx = 0; // Coluna 0
+        gbc.gridy = 0; // Linha 0
+        gbc.anchor = GridBagConstraints.WEST; // Alinha à esquerda
+        padding.add(voltar, gbc);
+
+        // Label "Adicionar Músicas"
+        JLabel labelAdicionarMusicas = new JLabel("Adicionar Músicas", JLabel.CENTER);
+        labelAdicionarMusicas.setFont(new Font("Arial", Font.BOLD, 30)); // Fonte maior e em negrito
+        gbc.gridx = 1; // Coluna 1
+        gbc.gridy = 0; // Linha 0
+        gbc.weightx = 1.0; // Ocupa o espaço restante
+        gbc.anchor = GridBagConstraints.CENTER; // Centraliza a label
+        padding.add(labelAdicionarMusicas, gbc);
 
         // Tabela de músicas
         tableModel = new DefaultTableModel() {
@@ -83,14 +101,16 @@ public class AdicionarMusica extends JFrame implements ActionListener {
         painelInferior.add(comboPlaylists);
         painelInferior.add(adicionar);
 
+        // Adiciona os componentes à janela
         adicionarMusica.add(padding, BorderLayout.NORTH);
         adicionarMusica.add(scrollPane, BorderLayout.CENTER);
         adicionarMusica.add(painelInferior, BorderLayout.SOUTH);
 
+        // Carrega as músicas no catálogo
         carregarMusicas();
+
         adicionarMusica.setVisible(true);
     }
-
 
     // Carrega as músicas do catálogo na tabela
     private void carregarMusicas() {

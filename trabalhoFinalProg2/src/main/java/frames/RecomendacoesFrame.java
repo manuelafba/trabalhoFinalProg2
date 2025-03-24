@@ -33,25 +33,43 @@ public class RecomendacoesFrame extends JFrame implements ActionListener {
         this.setTitle("Music Player");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setExtendedState(JFrame.MAXIMIZED_BOTH); // Inicializa o programa em tela cheia
-        this.setSize(1080,720); // Tamanho padrão caso o programa seja minimizado
+        this.setSize(1080, 720); // Tamanho padrão caso o programa seja minimizado
         this.setLayout(new BorderLayout());
         this.getContentPane().setBackground(new Color(255, 255, 255));
 
         ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
         this.setIconImage(icone.getImage());
 
-        // Painel superior com o botão de voltar
-        JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        // Painel superior com o botão "Voltar" e a label "Recomendações"
+        JPanel padding = new JPanel(new GridBagLayout()); // Usando GridBagLayout para posicionamento preciso
         padding.setBackground(Color.white);
         padding.setPreferredSize(new Dimension(padding.getWidth(), 70));
 
+        // Configuração do GridBagConstraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(0, 10, 0, 10); // Espaçamento entre os componentes
+
+        // Botão "Voltar"
         voltar = new JButton("Voltar");
         voltar.setPreferredSize(new Dimension(100, 40));
         Font fonteB = voltar.getFont().deriveFont(20f);
         voltar.setFont(fonteB);
         voltar.setFocusable(false);
         voltar.addActionListener(this);
-        padding.add(voltar);
+
+        gbc.gridx = 0; // Coluna 0
+        gbc.gridy = 0; // Linha 0
+        gbc.anchor = GridBagConstraints.WEST; // Alinha à esquerda
+        padding.add(voltar, gbc);
+
+        // Label "Recomendações"
+        JLabel labelRecomendacoes = new JLabel("Recomendações", JLabel.CENTER);
+        labelRecomendacoes.setFont(new Font("Arial", Font.BOLD, 30)); // Fonte maior e em negrito
+        gbc.gridx = 1; // Coluna 1
+        gbc.gridy = 0; // Linha 0
+        gbc.weightx = 1.0; // Ocupa o espaço restante
+        gbc.anchor = GridBagConstraints.CENTER; // Centraliza a label
+        padding.add(labelRecomendacoes, gbc);
 
         // Tabela de recomendações
         tableModel = new DefaultTableModel() {

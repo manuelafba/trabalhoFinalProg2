@@ -27,30 +27,46 @@ public class Cadastro extends JFrame implements ActionListener {
         cadastro.setLayout(new BorderLayout()); // Responsividade
         cadastro.getContentPane().setBackground(new Color(255, 255, 255));// cor janela
 
+        // Carrega o ícone
         ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
-        cadastro.setIconImage(icone.getImage());
+
+        // Redimensiona o ícone para 200x200 pixels
+        Image imagemRedimensionada = icone.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+        ImageIcon iconeRedimensionado = new ImageIcon(imagemRedimensionada);
+
+        // Define o ícone da janela
+        cadastro.setIconImage(iconeRedimensionado.getImage());
 
         // Painel superior (NORTH)
         JPanel painelTop = new JPanel(new BorderLayout()); // Usando BorderLayout para o painel principal
         painelTop.setBackground(Color.white);
-        painelTop.setPreferredSize(new Dimension(100, 300)); // Aumentei a altura
+        painelTop.setPreferredSize(new Dimension(100, 350)); // Aumentei a altura para acomodar o espaço extra
 
         // Painel interno para centralizar as labels
         JPanel painelInterno = new JPanel(new GridBagLayout()); // Usando GridBagLayout para centralização
         painelInterno.setOpaque(false); // Fundo transparente
+
+        // Adiciona um espaço rígido no topo para abaixar os elementos
+        painelTop.add(Box.createRigidArea(new Dimension(0, 50)), BorderLayout.NORTH); // 50 pixels de espaço no topo
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.insets = new Insets(10, 10, 10, 10); // Espaçamento entre os componentes
 
+        // Label com o ícone redimensionado
+        JLabel iconLabel = new JLabel(iconeRedimensionado);
+        iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        painelInterno.add(iconLabel, gbc);
+
+        gbc.gridy = 1; // Próxima linha
         JLabel mainIcon = new JLabel("Music Player", JLabel.CENTER);
         mainIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
         Font fonteT = mainIcon.getFont().deriveFont(80f);
         mainIcon.setFont(fonteT);
         painelInterno.add(mainIcon, gbc);
 
-        gbc.gridy = 1; // Próxima linha
+        gbc.gridy = 2; // Próxima linha
         JLabel descricao = new JLabel("Insira aqui seu nome: ", JLabel.CENTER);
         descricao.setAlignmentX(Component.CENTER_ALIGNMENT);
         Font fonteA = descricao.getFont().deriveFont(35f);

@@ -34,20 +34,41 @@ public class Playlists extends JFrame implements ActionListener {
         ImageIcon icone = new ImageIcon("src/main/java/assets/icon.jpg");
         this.setIconImage(icone.getImage());
 
-        JPanel padding = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        // Painel superior com o botão "Voltar" e a label "Playlists"
+        JPanel padding = new JPanel(new GridBagLayout()); // Usando GridBagLayout para posicionamento preciso
         padding.setBackground(Color.white);
         padding.setPreferredSize(new Dimension(padding.getWidth(), 70));
-        painelPlaylists.setLayout(new BoxLayout(painelPlaylists, BoxLayout.Y_AXIS));
 
+        // Configuração do GridBagConstraints
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(0, 10, 0, 10); // Espaçamento entre os componentes
+
+        // Botão "Voltar"
         voltar.setPreferredSize(new Dimension(100, 40));
         Font fonteB = voltar.getFont().deriveFont(20f);
         voltar.setFont(fonteB);
         voltar.setFocusable(false);
         voltar.addActionListener(this);
-        padding.add(voltar);
 
+        gbc.gridx = 0; // Coluna 0
+        gbc.gridy = 0; // Linha 0
+        gbc.anchor = GridBagConstraints.WEST; // Alinha à esquerda
+        padding.add(voltar, gbc);
+
+        // Label "Playlists"
+        JLabel labelPlaylists = new JLabel("Playlists", JLabel.CENTER);
+        labelPlaylists.setFont(new Font("Arial", Font.BOLD, 30)); // Fonte maior e em negrito
+        gbc.gridx = 1; // Coluna 1
+        gbc.gridy = 0; // Linha 0
+        gbc.weightx = 1.0; // Ocupa o espaço restante
+        gbc.anchor = GridBagConstraints.CENTER; // Centraliza a label
+        padding.add(labelPlaylists, gbc);
+
+        // Painel de playlists com scroll
+        painelPlaylists.setLayout(new BoxLayout(painelPlaylists, BoxLayout.Y_AXIS));
         JScrollPane scrollPane = new JScrollPane(painelPlaylists);
 
+        // Adiciona os componentes à janela
         this.add(padding, BorderLayout.NORTH);
         this.add(scrollPane, BorderLayout.CENTER);
 

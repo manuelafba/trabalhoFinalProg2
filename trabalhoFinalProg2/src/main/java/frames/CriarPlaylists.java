@@ -54,19 +54,28 @@ public class CriarPlaylists extends JFrame implements ActionListener {
         gbc.gridy = 0;
         gbc.insets = new Insets(10, 10, 10, 10); // Espaçamento entre os componentes
 
+        // Adiciona a imagem acima da label "Music Player"
+        ImageIcon icon = new ImageIcon("src/main/java/assets/icon.jpg");
+        Image img = icon.getImage().getScaledInstance(200, 200, Image.SCALE_SMOOTH); // Redimensiona a imagem para 200x200
+        JLabel imagemLabel = new JLabel(new ImageIcon(img));
+        gbc.gridy = 0; // Primeira linha no painel central
+        painelCentral.add(imagemLabel, gbc);
+
+        // Adiciona a label "Music Player" abaixo da imagem
         JLabel mainIcon = new JLabel("Music Player", JLabel.CENTER);
         mainIcon.setAlignmentX(Component.CENTER_ALIGNMENT);
         Font fonteT = mainIcon.getFont().deriveFont(80f);
         mainIcon.setFont(fonteT);
+        gbc.gridy = 1; // Segunda linha no painel central
         painelCentral.add(mainIcon, gbc);
 
         // Adiciona o JTextField e o JButton logo abaixo da label "Music Player"
-        gbc.gridy = 1; // Segunda linha no painel central
+        gbc.gridy = 2; // Terceira linha no painel central
         gbc.insets = new Insets(20, 10, 10, 10); // Ajusta o espaçamento superior
         inputNomePlaylist.setPreferredSize(new Dimension(400, 40)); // Aumentei o tamanho do JTextField
         painelCentral.add(inputNomePlaylist, gbc);
 
-        gbc.gridy = 2; // Terceira linha no painel central
+        gbc.gridy = 3; // Quarta linha no painel central
         gbc.insets = new Insets(10, 10, 20, 10); // Ajusta o espaçamento inferior
         criar.setPreferredSize(new Dimension(300, 80));
         Font fonteA = criar.getFont().deriveFont(35f);
