@@ -30,7 +30,7 @@
                 System.out.println("Música "+ musica.getNome() + " adicionada na playlist " + this.getNome() + " com sucesso.");
                 return;
             }
-            System.out.println("Música "+ musica.getNome() + " já está na playlist " + this.getNome() + ".");
+            throw new IllegalStateException("Música "+ musica.getNome() + " já está na playlist " + this.getNome() + ".");
         }
 
         public void removerMusica(Musica musica) {

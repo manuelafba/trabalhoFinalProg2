@@ -1,3 +1,4 @@
+import frames.EscolhaUsuario;
 import models.Musica;
 import models.Playlist;
 import musicPlayer.Carregar;
@@ -8,6 +9,10 @@ import users.Usuario;
 import users.UsuarioGratuito;
 import users.UsuarioPremium;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,13 +22,24 @@ import java.util.Objects;
 
 class Main {
     public static void main(String[] args) {
+
+        try {
+            Catalogo catalogo = Carregar.carregarCatalog("src/main/musics");
+            MusicPlayer musicPlayer = MusicPlayer.getInstancia();
+            Recomendacoes recomendacoes = new Recomendacoes(catalogo);
+            new EscolhaUsuario();
+        } catch (IllegalArgumentException e) {
+            System.err.println("Verifique o diretório de músicas passado");
+        }
+
+        /*
         BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 
         // Carrega o catálogo de músicas
         Catalogo catalogo = Carregar.carregarCatalog("src/main/musics");
 
         // Cria uma instância do MusicPlayer
-        MusicPlayer musicPlayer = MusicPlayer.getInstancia();
+
 
         // Cria objeto Recomendações
         Recomendacoes recomendacoes = new Recomendacoes(catalogo);
@@ -295,6 +311,8 @@ class Main {
         System.out.println("[7] Ver dados do usuário");
         System.out.println("[8] Sair");
         System.out.print("Sua escolha: ");
+
+         */
     }
 }
 
